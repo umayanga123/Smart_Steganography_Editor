@@ -1,0 +1,5 @@
+﻿  EncoderForm.cpp
+F:\Working Directory\MIS\mis_project\Smart_Steganography_Editor\sse_project\EncorderComponent\EncoderForm.cpp(11,32): warning C4829:  Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
+  .NETFramework,Version=v4.6.1.AssemblyAttributes.cpp
+  EncoderForm.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+  EncorderComponent.vcxproj -> F:\Working Directory\MIS\mis_project\Smart_Steganography_Editor\sse_project\EncorderComponent\x64\Debug\EncoderComponent.exe
