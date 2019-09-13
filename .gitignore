@@ -9,3 +9,15 @@
 /EncorderComponent/.vs/EncorderComponent/v16/Browse.VC.db
 /EncorderComponent/.vs/EncorderComponent/v16/.suo
 /.vs/slnx.sqlite
+/EncorderComponent/x64/Debug/
+/EncorderComponent/x64/Debug/EncoderComponent.tlog/
+/EncorderComponent/x64/Debug/EncoderComponent.tlog/*.tlog
+*.tlog
+*.ipch
+*.obj
+*.pdb
+*.sarif
+*.xml
+*.cache
+*.log
+*.gitignore

@@ -4,9 +4,6 @@
 using namespace System;
 using namespace System::Windows::Forms;
 
-using namespace System::Diagnostics;
-
-
 [STAThread]
 void main(array<String^>^ arg) {
 	Application::EnableVisualStyles();
@@ -14,6 +11,8 @@ void main(array<String^>^ arg) {
 
 	EncorderComponent::EncoderForm form;
 	Application::Run(%form);
+
+
 
 }
 
