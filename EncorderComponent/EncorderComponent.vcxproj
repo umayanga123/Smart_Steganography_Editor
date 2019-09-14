@@ -136,7 +136,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="encode.cpp" />
+    <ClCompile Include="DecoderAlgo.cpp" />
+    <ClCompile Include="EncoderAlgo.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="ImageTest.cpp" />
   </ItemGroup>

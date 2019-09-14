@@ -13,6 +13,7 @@
 /EncorderComponent/x64/Debug/EncoderComponent.tlog/
 /EncorderComponent/x64/Debug/EncoderComponent.tlog/*.tlog
 /EncorderComponent/.vs/
+/.vs/*
 *.tlog
 *.ipch
 *.obj
