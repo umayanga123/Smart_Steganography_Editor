@@ -1,4 +1,4 @@
-#include "EncoderForm.h"
+#include "MainForm.h"
 #include <windows.h>
 
 using namespace System;
@@ -9,10 +9,8 @@ void main(array<String^>^ arg) {
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
 
-	EncorderComponent::EncoderForm form;
+	MainComponent::MainForm form;
 	Application::Run(%form);
-
-
 
 }
 

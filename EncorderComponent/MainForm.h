@@ -1,7 +1,7 @@
 #pragma once
 #include "ImageTest.cpp"
 
-namespace EncorderComponent {
+namespace MainComponent {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -14,10 +14,10 @@ namespace EncorderComponent {
 	/// <summary>
 	/// Summary for EncoderForm
 	/// </summary>
-	public ref class EncoderForm : public System::Windows::Forms::Form
+	public ref class MainForm : public System::Windows::Forms::Form
 	{
 	public:
-		EncoderForm(void)
+		MainForm(void)
 		{
 			InitializeComponent();
 			//
@@ -29,7 +29,7 @@ namespace EncorderComponent {
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		~EncoderForm()
+		~MainForm()
 		{
 			if (components)
 			{
@@ -40,6 +40,8 @@ namespace EncorderComponent {
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::Button^ button3;
+	private: System::Windows::Forms::Button^ button4;
+	private: System::Windows::Forms::Button^ button5;
 	protected:
 
 	private:
@@ -59,6 +61,8 @@ namespace EncorderComponent {
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->button4 = (gcnew System::Windows::Forms::Button());
+			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// textBox1
@@ -70,39 +74,61 @@ namespace EncorderComponent {
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(173, 171);
+			this->button1->Location = System::Drawing::Point(173, 110);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(75, 23);
 			this->button1->TabIndex = 1;
 			this->button1->Text = L"ok";
 			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &EncoderForm::Button1_Click);
+			this->button1->Click += gcnew System::EventHandler(this, &MainForm::Button1_Click);
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(55, 171);
+			this->button2->Location = System::Drawing::Point(33, 110);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(75, 23);
 			this->button2->TabIndex = 2;
 			this->button2->Text = L"Test";
 			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &EncoderForm::Button2_Click);
+			this->button2->Click += gcnew System::EventHandler(this, &MainForm::Button2_Click);
 			// 
 			// button3
 			// 
-			this->button3->Location = System::Drawing::Point(173, 213);
+			this->button3->Location = System::Drawing::Point(173, 226);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(75, 23);
 			this->button3->TabIndex = 3;
 			this->button3->Text = L"Exit";
 			this->button3->UseVisualStyleBackColor = true;
-			this->button3->Click += gcnew System::EventHandler(this, &EncoderForm::Button3_Click);
+			this->button3->Click += gcnew System::EventHandler(this, &MainForm::Button3_Click);
+			// 
+			// button4
+			// 
+			this->button4->Location = System::Drawing::Point(33, 176);
+			this->button4->Name = L"button4";
+			this->button4->Size = System::Drawing::Size(75, 23);
+			this->button4->TabIndex = 4;
+			this->button4->Text = L"Encode";
+			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &MainForm::Button4_Click);
+			// 
+			// button5
+			// 
+			this->button5->Location = System::Drawing::Point(173, 176);
+			this->button5->Name = L"button5";
+			this->button5->Size = System::Drawing::Size(75, 23);
+			this->button5->TabIndex = 5;
+			this->button5->Text = L"Decode";
+			this->button5->UseVisualStyleBackColor = true;
+			this->button5->Click += gcnew System::EventHandler(this, &MainForm::Button5_Click);
 			// 
 			// EncoderForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(284, 261);
+			this->Controls->Add(this->button5);
+			this->Controls->Add(this->button4);
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
@@ -128,6 +154,16 @@ namespace EncorderComponent {
 	}
 	private: System::Void Button3_Click(System::Object^ sender, System::EventArgs^ e) {
 		_Exit(10);
+	}
+	private: System::Void Button4_Click(System::Object^ sender, System::EventArgs^ e) {
+		Test test;
+		test.LSB_encoder();
+	}
+	private: System::Void Button5_Click(System::Object^ sender, System::EventArgs^ e) {
+		Test test;
+		std::string msg =test.LSB_decoder();
+		String^ str2 = gcnew String(msg.c_str());
+		MessageBox::Show("Secret Message :" + str2, "title", MessageBoxButtons::OK);
 	}
 };
 }
