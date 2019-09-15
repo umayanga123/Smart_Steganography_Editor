@@ -3,7 +3,7 @@
 class Test {
 public:
 	int A() {
-		cv::Mat img = cv::imread("lena.png");
+		cv::Mat img = cv::imread("mario.png", cv::IMREAD_UNCHANGED);
 		cv::namedWindow("image", cv::WindowFlags::WINDOW_NORMAL);
 		imshow("image", img);
 		return 0;
@@ -13,7 +13,7 @@ public:
 	int LSB_encoder(std::string text) {
 
 		// Stores original image
-		cv::Mat image = cv::imread("lena.png");
+		cv::Mat image = cv::imread("mario.png");
 		if (image.empty()) {
 			std::cout << "Image Error\n";
 			exit(-1);
@@ -114,7 +114,7 @@ public:
 		}
 
 		// Writes the stegnographic image
-		imwrite("output_image.png", image);
+		imwrite("output_mario.png", image);
 
 		return 0;
 	}

@@ -5,7 +5,7 @@ class DecorderAlgo {
 public:
 	std::string  LSB_decoder(std::string path) {
 		// Stores original image
-		cv::Mat image = cv::imread(path);
+		cv::Mat image = cv::imread(path , cv::IMREAD_UNCHANGED);
 		if (image.empty()) {
 			return "Image Error\n";
 		}
@@ -39,7 +39,7 @@ public:
 
 						// NULL char is encountered
 						if (ch == '\0')
-							break;
+							goto L2;
 
 						bit_count = 0;
 						msg += ch;
@@ -51,7 +51,7 @@ public:
 
 				}
 			}
-		};
+		}L2:;
 
 
 		return msg;

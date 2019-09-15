@@ -3,6 +3,7 @@
 #include "msclr\marshal_cppstd.h"
 #include "EncoderAlgo.cpp"
 #include "DecoderAlgo.cpp"
+#include "ImageViwer.cpp"
 
 namespace MainComponent {
 
@@ -33,13 +34,16 @@ namespace MainComponent {
 			}
 		}
 	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Button^ button2;
+	private: System::Windows::Forms::Button^ viewImageBtn;
+
 	private: System::Windows::Forms::Button^ button3;
-	private: System::Windows::Forms::Button^ button4;
-	private: System::Windows::Forms::Button^ button5;
+	private: System::Windows::Forms::Button^ encodeBtn;
+	private: System::Windows::Forms::Button^ decodeBtn;
+
+
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::OpenFileDialog^ openFileDialog;
+	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::ComponentModel::IContainer^ components;
 	protected:
 
@@ -57,71 +61,62 @@ namespace MainComponent {
 		void InitializeComponent(void)
 		{
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->viewImageBtn = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->button4 = (gcnew System::Windows::Forms::Button());
-			this->button5 = (gcnew System::Windows::Forms::Button());
+			this->encodeBtn = (gcnew System::Windows::Forms::Button());
+			this->decodeBtn = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->openFileDialog = (gcnew System::Windows::Forms::OpenFileDialog());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// textBox1
 			// 
 			this->textBox1->Location = System::Drawing::Point(126, 31);
 			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(210, 20);
+			this->textBox1->Size = System::Drawing::Size(279, 20);
 			this->textBox1->TabIndex = 0;
 			// 
-			// button1
+			// viewImageBtn
 			// 
-			this->button1->Location = System::Drawing::Point(36, 324);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(75, 23);
-			this->button1->TabIndex = 1;
-			this->button1->Text = L"ok";
-			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &MainForm::Button1_Click);
-			// 
-			// button2
-			// 
-			this->button2->Location = System::Drawing::Point(186, 125);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(150, 23);
-			this->button2->TabIndex = 2;
-			this->button2->Text = L"View Image";
-			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &MainForm::Button2_Click);
+			this->viewImageBtn->Location = System::Drawing::Point(441, 191);
+			this->viewImageBtn->Name = L"viewImageBtn";
+			this->viewImageBtn->Size = System::Drawing::Size(150, 23);
+			this->viewImageBtn->TabIndex = 2;
+			this->viewImageBtn->Text = L"View Image";
+			this->viewImageBtn->UseVisualStyleBackColor = true;
+			this->viewImageBtn->Click += gcnew System::EventHandler(this, &MainForm::viewImageBtn_Click);
 			// 
 			// button3
 			// 
-			this->button3->Location = System::Drawing::Point(261, 324);
+			this->button3->Location = System::Drawing::Point(516, 356);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(75, 23);
 			this->button3->TabIndex = 3;
 			this->button3->Text = L"Exit";
 			this->button3->UseVisualStyleBackColor = true;
-			this->button3->Click += gcnew System::EventHandler(this, &MainForm::Button3_Click);
+			this->button3->Click += gcnew System::EventHandler(this, &MainForm::exitBtn_Click);
 			// 
-			// button4
+			// encodeBtn
 			// 
-			this->button4->Location = System::Drawing::Point(186, 67);
-			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(150, 23);
-			this->button4->TabIndex = 4;
-			this->button4->Text = L"Encode";
-			this->button4->UseVisualStyleBackColor = true;
-			this->button4->Click += gcnew System::EventHandler(this, &MainForm::Button4_Click);
+			this->encodeBtn->Location = System::Drawing::Point(441, 31);
+			this->encodeBtn->Name = L"encodeBtn";
+			this->encodeBtn->Size = System::Drawing::Size(150, 23);
+			this->encodeBtn->TabIndex = 4;
+			this->encodeBtn->Text = L"Encode";
+			this->encodeBtn->UseVisualStyleBackColor = true;
+			this->encodeBtn->Click += gcnew System::EventHandler(this, &MainForm::encodeBtn_Click);
 			// 
-			// button5
+			// decodeBtn
 			// 
-			this->button5->Location = System::Drawing::Point(186, 96);
-			this->button5->Name = L"button5";
-			this->button5->Size = System::Drawing::Size(150, 23);
-			this->button5->TabIndex = 5;
-			this->button5->Text = L"Decode";
-			this->button5->UseVisualStyleBackColor = true;
-			this->button5->Click += gcnew System::EventHandler(this, &MainForm::Button5_Click);
+			this->decodeBtn->Location = System::Drawing::Point(441, 67);
+			this->decodeBtn->Name = L"decodeBtn";
+			this->decodeBtn->Size = System::Drawing::Size(150, 23);
+			this->decodeBtn->TabIndex = 5;
+			this->decodeBtn->Text = L"Decode";
+			this->decodeBtn->UseVisualStyleBackColor = true;
+			this->decodeBtn->Click += gcnew System::EventHandler(this, &MainForm::decodeBtn_Click);
 			// 
 			// label1
 			// 
@@ -137,21 +132,30 @@ namespace MainComponent {
 			this->openFileDialog->FileName = L"openFileDialog";
 			this->openFileDialog->Title = L"select image";
 			// 
+			// pictureBox1
+			// 
+			this->pictureBox1->Location = System::Drawing::Point(15, 67);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(390, 147);
+			this->pictureBox1->TabIndex = 7;
+			this->pictureBox1->TabStop = false;
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(364, 359);
+			this->ClientSize = System::Drawing::Size(621, 391);
+			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->label1);
-			this->Controls->Add(this->button5);
-			this->Controls->Add(this->button4);
+			this->Controls->Add(this->decodeBtn);
+			this->Controls->Add(this->encodeBtn);
 			this->Controls->Add(this->button3);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
+			this->Controls->Add(this->viewImageBtn);
 			this->Controls->Add(this->textBox1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
 			this->Name = L"MainForm";
 			this->Text = L"Steganography Application";
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -164,21 +168,32 @@ namespace MainComponent {
 		MessageBox::Show("message" + textBox1->Text + a, "title", MessageBoxButtons::OK);
 
 	}
-	private: System::Void Button2_Click(System::Object^ sender, System::EventArgs^ e) {
-		Test test;
-		test.A();
-	}
-	private: System::Void Button3_Click(System::Object^ sender, System::EventArgs^ e) {
-		_Exit(10);
-	}
-
-
-	private: System::Void Button4_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void viewImageBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		String^ path;
 		if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 			if (openFileDialog->OpenFile() != nullptr) {
 				path = openFileDialog->InitialDirectory + openFileDialog->FileName;
-				//MessageBox::Show("Secret Message :" + path, "title", MessageBoxButtons::OK);
+			}
+		}
+
+		if (path == nullptr) {
+			return;
+		}
+		std::string new_path = msclr::interop::marshal_as<std::string>(path);
+
+		ImageViwer imageViwer;
+		imageViwer.showImage(new_path);
+	}
+	private: System::Void exitBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+		_Exit(10);
+	}
+
+
+	private: System::Void encodeBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+		String^ path;
+		if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+			if (openFileDialog->OpenFile() != nullptr) {
+				path = openFileDialog->InitialDirectory + openFileDialog->FileName;
 			}
 		}
 
@@ -197,12 +212,16 @@ namespace MainComponent {
 		int i = encorder.LSB_encoder(s_text , new_path);
 		if (i == 0) {
 			MessageBox::Show("sucssfully encorded image", "title", MessageBoxButtons::OK);
+			Bitmap^ bmp = gcnew Bitmap(path);
+			pictureBox1->Image = bmp;
+			pictureBox1->SizeMode = PictureBoxSizeMode::CenterImage;
+
 		}
 		else {
 			MessageBox::Show("error code :" +i);
 		}
 	}
-	private: System::Void Button5_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void decodeBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		DecorderAlgo decorder;
 		String^ path;
 

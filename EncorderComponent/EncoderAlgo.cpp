@@ -6,7 +6,7 @@ public:
 	int LSB_encoder(std::string text ,std::string path) {
 
 		// Stores original image
-		cv::Mat image = cv::imread(path);
+		cv::Mat image = cv::imread(path, cv::IMREAD_UNCHANGED);
 		if (image.empty()) {
 			return -1;
 		}
@@ -60,13 +60,13 @@ public:
 					// if last_null_char is true and bit_count is 8, then our message is successfully encode.
 					if (last_null_char && bit_count == 8) {
 						encoded = true;
-						break;
+						goto L1;
 					}
 
 					// if bit_count is 8 we pick the next char from the file and work on it
 					if (bit_count == 8) {
 						bit_count = 0;
-				
+
 						if (word.length() > i) {
 							ch = word.at(i);
 							i++;
@@ -79,7 +79,7 @@ public:
 
 				}
 			}
-		};
+		}L1:;
 
 		// whole message was not encoded
 		if (!encoded) {

@@ -138,6 +138,8 @@
   <ItemGroup>
     <ClCompile Include="DecoderAlgo.cpp" />
     <ClCompile Include="EncoderAlgo.cpp" />
+    <ClCompile Include="HelperToolKit.cpp" />
+    <ClCompile Include="ImageViwer.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="ImageTest.cpp" />
   </ItemGroup>
