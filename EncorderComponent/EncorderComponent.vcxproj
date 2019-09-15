@@ -142,6 +142,7 @@
     <ClCompile Include="ImageViwer.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="ImageTest.cpp" />
+    <ClCompile Include="VideoHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">

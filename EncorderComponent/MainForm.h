@@ -4,6 +4,7 @@
 #include "EncoderAlgo.cpp"
 #include "DecoderAlgo.cpp"
 #include "ImageViwer.cpp"
+#include "VideoHelper.cpp"
 
 namespace MainComponent {
 
@@ -16,44 +17,45 @@ namespace MainComponent {
 	
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
-	public:
-		MainForm(void)
-		{
-			InitializeComponent();
-		}
-
-	protected:
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		~MainForm()
-		{
-			if (components)
+		public:
+			MainForm(void)
 			{
-				delete components;
+				InitializeComponent();
 			}
-		}
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::Button^ viewImageBtn;
 
-	private: System::Windows::Forms::Button^ button3;
-	private: System::Windows::Forms::Button^ encodeBtn;
-	private: System::Windows::Forms::Button^ decodeBtn;
+		protected:
+			/// <summary>
+			/// Clean up any resources being used.
+			/// </summary>
+			~MainForm()
+			{
+				if (components)
+				{
+					delete components;
+				}
+			}
+		private: System::Windows::Forms::TextBox^ textBox1;
+		private: System::Windows::Forms::Button^ viewImageBtn;
+
+		private: System::Windows::Forms::Button^ button3;
+		private: System::Windows::Forms::Button^ encodeBtn;
+		private: System::Windows::Forms::Button^ decodeBtn;
 
 
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::OpenFileDialog^ openFileDialog;
-	private: System::Windows::Forms::PictureBox^ pictureBox1;
-	private: System::ComponentModel::IContainer^ components;
-	protected:
+		private: System::Windows::Forms::Label^ label1;
+		private: System::Windows::Forms::OpenFileDialog^ openFileDialog;
+		private: System::Windows::Forms::PictureBox^ pictureBox1;
+		private: System::Windows::Forms::Button^ testBtn;
+		private: System::ComponentModel::IContainer^ components;
+		protected:
 
-	private:
+		private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
 
 
-#pragma region Windows Form Designer generated code
+		#pragma region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
@@ -68,6 +70,7 @@ namespace MainComponent {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->openFileDialog = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->testBtn = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -140,11 +143,22 @@ namespace MainComponent {
 			this->pictureBox1->TabIndex = 7;
 			this->pictureBox1->TabStop = false;
 			// 
+			// testBtn
+			// 
+			this->testBtn->Location = System::Drawing::Point(15, 356);
+			this->testBtn->Name = L"testBtn";
+			this->testBtn->Size = System::Drawing::Size(89, 23);
+			this->testBtn->TabIndex = 8;
+			this->testBtn->Text = L"Test";
+			this->testBtn->UseVisualStyleBackColor = true;
+			this->testBtn->Click += gcnew System::EventHandler(this, &MainForm::TestBtn_Click);
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(621, 391);
+			this->Controls->Add(this->testBtn);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->decodeBtn);
@@ -160,87 +174,102 @@ namespace MainComponent {
 			this->PerformLayout();
 
 		}
-#pragma endregion
-	private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		String^ message = "Hello ";
-		String^ title = "Welcome";
-		Char a = '!'; //A managed character
-		MessageBox::Show("message" + textBox1->Text + a, "title", MessageBoxButtons::OK);
 
-	}
-	private: System::Void viewImageBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-		String^ path;
-		if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-			if (openFileDialog->OpenFile() != nullptr) {
-				path = openFileDialog->InitialDirectory + openFileDialog->FileName;
+		#pragma endregion
+		private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e) {
+			String^ message = "Hello ";
+			String^ title = "Welcome";
+			Char a = '!'; //A managed character
+			MessageBox::Show("message" + textBox1->Text + a, "title", MessageBoxButtons::OK);
+
+		}
+
+
+		private: System::Void viewImageBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+			String^ path;
+			if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				if (openFileDialog->OpenFile() != nullptr) {
+					path = openFileDialog->InitialDirectory + openFileDialog->FileName;
+				}
+			}
+
+			if (path == nullptr) {
+				return;
+			}
+			std::string new_path = msclr::interop::marshal_as<std::string>(path);
+
+			ImageViwer imageViwer;
+			imageViwer.showImage(new_path);
+		}
+
+
+		private: System::Void exitBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+			_Exit(10);
+		}
+
+
+		private: System::Void encodeBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+			String^ path;
+			if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				if (openFileDialog->OpenFile() != nullptr) {
+					path = openFileDialog->InitialDirectory + openFileDialog->FileName;
+				}
+			}
+
+			if (path == nullptr) {
+				return;
+			}
+			std::string new_path = msclr::interop::marshal_as<std::string>(path);
+			System::String^ name = textBox1->Text;
+			if (name->Length < 1) {
+				MessageBox::Show("please enter secrect text", "title", MessageBoxButtons::OK);
+				return;
+			}
+
+			std::string s_text = msclr::interop::marshal_as<std::string>(textBox1->Text);
+			EncorderAlgo encorder;
+			int i = encorder.LSB_encoder(s_text , new_path);
+			if (i == 0) {
+				MessageBox::Show("sucssfully encorded image", "title", MessageBoxButtons::OK);
+				Bitmap^ bmp = gcnew Bitmap(path);
+				pictureBox1->Image = bmp;
+				pictureBox1->SizeMode = PictureBoxSizeMode::CenterImage;
+
+			}
+			else {
+				MessageBox::Show("error code :" +i);
 			}
 		}
 
-		if (path == nullptr) {
-			return;
-		}
-		std::string new_path = msclr::interop::marshal_as<std::string>(path);
 
-		ImageViwer imageViwer;
-		imageViwer.showImage(new_path);
-	}
-	private: System::Void exitBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-		_Exit(10);
-	}
+		private: System::Void decodeBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+			DecorderAlgo decorder;
+			String^ path;
 
-
-	private: System::Void encodeBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-		String^ path;
-		if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-			if (openFileDialog->OpenFile() != nullptr) {
-				path = openFileDialog->InitialDirectory + openFileDialog->FileName;
+			if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				if (openFileDialog->OpenFile() != nullptr) {
+					path = openFileDialog->InitialDirectory + openFileDialog->FileName;
+				}
 			}
-		}
 
-		if (path == nullptr) {
-			return;
-		}
-		std::string new_path = msclr::interop::marshal_as<std::string>(path);
-		System::String^ name = textBox1->Text;
-		if (name->Length < 1) {
-			MessageBox::Show("please enter secrect text", "title", MessageBoxButtons::OK);
-			return;
-		}
+			if (path == nullptr) {
 
-		std::string s_text = msclr::interop::marshal_as<std::string>(textBox1->Text);
-		EncorderAlgo encorder;
-		int i = encorder.LSB_encoder(s_text , new_path);
-		if (i == 0) {
-			MessageBox::Show("sucssfully encorded image", "title", MessageBoxButtons::OK);
-			Bitmap^ bmp = gcnew Bitmap(path);
-			pictureBox1->Image = bmp;
-			pictureBox1->SizeMode = PictureBoxSizeMode::CenterImage;
-
-		}
-		else {
-			MessageBox::Show("error code :" +i);
-		}
-	}
-	private: System::Void decodeBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-		DecorderAlgo decorder;
-		String^ path;
-
-		if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-			if (openFileDialog->OpenFile() != nullptr) {
-				path = openFileDialog->InitialDirectory + openFileDialog->FileName;
+				return;
 			}
-		}
-
-		if (path == nullptr) {
-
-			return;
-		}
 
 	
-		std::string output_path = msclr::interop::marshal_as<std::string>(path);
-		std::string msg = decorder.LSB_decoder(output_path);
-		String^ str2 = gcnew String(msg.c_str());
-		MessageBox::Show("Secret Message :" + str2, "title", MessageBoxButtons::OK);
-	}
-};
+			std::string output_path = msclr::interop::marshal_as<std::string>(path);
+			std::string msg = decorder.LSB_decoder(output_path);
+			String^ str2 = gcnew String(msg.c_str());
+			MessageBox::Show("Secret Message :" + str2, "title", MessageBoxButtons::OK);
+		}
+
+		private: System::Void TestBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+			VideoHelper vedioHelper;
+			int i = vedioHelper.splitFrames();
+			if (i == 0) {
+			  MessageBox::Show("Finish Operation");
+			}
+		}
+	};
 }
