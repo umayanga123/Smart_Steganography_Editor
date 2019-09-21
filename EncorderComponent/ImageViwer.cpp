@@ -1,5 +1,5 @@
 #include <opencv2/opencv.hpp>
-#include <stdlib.h>
+
 class ImageViwer {
 public:
 	int showImage(std::string path) {
@@ -11,6 +11,7 @@ public:
 		//cv::split(img, ch);
 
 		imshow(path.substr(path.find_last_of("/\\") + 1), img);
+		img.release();
 		return 0;
 	}
 };

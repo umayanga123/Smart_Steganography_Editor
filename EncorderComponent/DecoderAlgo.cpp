@@ -53,7 +53,8 @@ public:
 			}
 		}L2:;
 
-
+		cv::destroyAllWindows();
+		image.release();
 		return msg;
 	}
 

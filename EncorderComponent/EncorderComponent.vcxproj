@@ -138,11 +138,12 @@
   <ItemGroup>
     <ClCompile Include="DecoderAlgo.cpp" />
     <ClCompile Include="EncoderAlgo.cpp" />
-    <ClCompile Include="HelperToolKit.cpp" />
     <ClCompile Include="ImageViwer.cpp" />
+    <ClCompile Include="LSB_Vedio_Decoder.cpp" />
+    <ClCompile Include="LSB_Vedio_Encoder.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="ImageTest.cpp" />
-    <ClCompile Include="VideoHelper.cpp" />
+    <ClCompile Include="VideoHelperTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
@@ -153,6 +154,9 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SteganographyEditor.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
