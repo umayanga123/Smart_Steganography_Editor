@@ -2,6 +2,365 @@
 
 class VideoHelper {
 
+
+public:
+	int readPixel() {
+		cv::Mat img;
+
+		img = cv::imread("pic_2.jpg", CV_LOAD_IMAGE_UNCHANGED);
+	    //img = cv::imread("mario_l_bw.png", CV_LOAD_IMAGE_UNCHANGED);
+
+		//
+		//cv::Mat im_gray = cv::imread("c.png", CV_LOAD_IMAGE_GRAYSCALE);
+		//cv::Mat img_bw = im_gray > 128;
+		//imwrite("c_out.png", img_bw);
+
+		if (img.empty()) {
+			std::cout << "Error" << std::endl;
+			return -1;
+		}
+
+		//cv::namedWindow("New_image", CV_WINDOW_NORMAL);
+		//imshow("New_image", img);
+		cv::Mat rgbchannel[3];
+		// The actual splitting.
+		split(img, rgbchannel);
+		//cv::namedWindow("Blue", CV_WINDOW_AUTOSIZE);
+		//imshow("blue", rgbchannel[0]);
+		imwrite("one_lemma_pic_2.png", rgbchannel[0]);
+
+		std::ofstream outputFile;
+		outputFile.open("c.txt");
+
+
+
+		// print number of channels in image
+		//std::cout << "image channels: " << img.channels() << std::endl;
+		//std::cout << "Pixel value: " << std::endl;
+		outputFile << "image channels: " << img.channels() << '\n';
+		outputFile << "Y: " << img.cols << '\n';
+		outputFile << "X " << img.rows << '\n';
+		outputFile << "Pixel value: " << '\n';
+
+		// check if image is a single channel
+		if (img.channels() == 1) {
+			for (int y = 0; y < img.cols; y++) {
+				for (int x = 0; x < img.rows; x++) {
+					outputFile << "[" << y << " , " << x << "]";
+					cv::Scalar pixel = img.at<uchar>(x, y);
+					//std::cout << pixel.val[0] << ",";
+					outputFile << pixel.val[0] << '\n';
+				}
+				std::cout << std::endl << '\n';
+			}
+		}
+		else if (img.channels() == 3) {
+			for (int y = 0; y < img.cols; y++) {
+				for (int x = 0; x < img.rows; x++) {
+					outputFile << "[" << y << " , " << x << "]" ;
+					cv::Vec3b pixel = img.at<cv::Vec3b>(x, y);
+					int blue = pixel.val[0];
+					int green = pixel.val[1];
+					int red = pixel.val[2];
+					
+					//std::cout << "[" << blue << " " << green << " " << red << "],";
+					outputFile << "[" << blue << " " << green << " " << red << "]," << '\n';
+				}
+				//std::cout << std::endl;
+				outputFile << std::endl <<'\n';
+				
+			}
+		}
+		else if (img.channels() == 4) {
+			for (int y = 0; y < img.cols; y++) {
+				for (int x = 0; x < img.rows; x++) {
+					outputFile << "[" << y << " , " << x << "]";
+					cv::Vec4b pixel = img.at<cv::Vec4b>(x, y);
+					int blue = pixel.val[0];
+					int green = pixel.val[1];
+					int red = pixel.val[2];
+					int alpha = pixel.val[3];
+					//std::cout << "[" << blue << " " << green << " " << red << "],";
+					outputFile << "[" << blue << " " << green << " " << red << " " << alpha << "]," << '\n';
+				}
+				//std::cout << std::endl;
+				outputFile << std::endl << '\n';
+
+			}
+		}
+		else {
+			std::cout << "this is not a single channel image" << std::endl;
+		}
+
+		// Close the file.
+		outputFile.close();
+
+		//cv::waitKey(0);
+		return 0;
+
+
+	}
+
+public:
+	int readConvertPixel() {
+		cv::Mat qr_img;
+		cv::Mat	cv_img;
+
+		qr_img = cv::imread("qr.png", CV_LOAD_IMAGE_UNCHANGED);
+		cv_img = cv::imread("lena.png", CV_LOAD_IMAGE_UNCHANGED);
+
+		//
+		//cv::Mat im_gray = cv::imread("mario_l.png", CV_LOAD_IMAGE_GRAYSCALE);
+		//cv::Mat img_bw = im_gray > 128;
+		//imwrite("mario_l_bw.png", img_bw);
+
+		if (qr_img.empty() | cv_img.empty()) {
+			std::cout << "Error" << std::endl;
+			return -1;
+		}
+
+		//cv::namedWindow("New_image", CV_WINDOW_NORMAL);
+		//imshow("New_image", img);
+		std::ofstream outputFile;
+		outputFile.open("a.txt");
+
+
+
+		// print number of channels in image
+		std::cout << "Pixel value: " << std::endl;
+		outputFile << "image channels: " << cv_img.channels() << '\n';
+		outputFile << "Y: " << cv_img.cols << '\n';
+        outputFile << "X " << cv_img.rows << '\n';
+		outputFile << "Pixel value: " << '\n';
+
+		// check if image is a single channel
+		if (qr_img.channels() == 5) {
+			for (int y = 0; y < qr_img.cols; y++) {
+				for (int x = 0; x < qr_img.rows; x++) {
+					outputFile << "[" << y << " , " << x << "]";
+					cv::Scalar pixel = qr_img.at<uchar>(x, y);
+					//std::cout << pixel.val[0] << ",";
+					outputFile << pixel.val[0] << '\n';
+				}
+				std::cout << std::endl << '\n';
+			}
+		}
+		else if (cv_img.channels() == 3) {
+			for (int y = 0; y < cv_img.cols; y++) {
+				for (int x = 0; x < cv_img.rows; x++) {
+					outputFile << "[" << y << " , " << x << "]";
+					cv::Vec3b pixel = cv_img.at<cv::Vec3b>(x, y);
+					cv::Scalar qr_pixel = qr_img.at<uchar>(x, y);
+					int blue = pixel.val[0];
+					int green = pixel.val[1];
+					int red = pixel.val[2];
+
+					if (qr_pixel.val[0] == 0) {
+						pixel.val[0] = 0;
+						//	pixel.val[1] = 0;
+						//	pixel.val[2] = 0;
+					}
+					else {
+					//	 pixel.val[0] = 255;
+						//	pixel.val[1] = 255;
+						//	pixel.val[2] = 255;
+					}
+					cv_img.at<cv::Vec3b>(x, y) = pixel;
+					//std::cout << "[" << blue << " " << green << " " << red << "],";
+					outputFile << "[" << blue << " " << green << " " << red << "]," << '\n';
+				}
+				//std::cout << std::endl;
+				outputFile << std::endl << '\n';
+
+			}
+		}
+		else if (cv_img.channels() == 4) {
+			for (int y = 0; y < cv_img.cols; y++) {
+				for (int x = 0; x < cv_img.rows; x++) {
+					outputFile << "[" << y << " , " << x << "]";
+					cv::Vec4b pixel = cv_img.at<cv::Vec4b>(x, y);
+
+					cv::Scalar qr_pixel = qr_img.at<uchar>(x, y);
+					//std::cout << pixel.val[0] << ",";
+					//outputFile << qr_pixel.val[0] << '\n';
+					int blue = pixel.val[0];
+					int green = pixel.val[1];
+					int red = pixel.val[2];
+					int alpha = pixel.val[3];
+					if (qr_pixel.val[0] == 0) {
+						pixel.val[0] = 0;
+					//	pixel.val[1] = 0;
+					//	pixel.val[2] = 0;
+					}
+					else{
+						pixel.val[0] = 255;
+					//	pixel.val[1] = 255;
+					//	pixel.val[2] = 255;
+					}
+					
+
+					
+
+					//std::cout << "[" << blue << " " << green << " " << red << "],";
+
+					cv_img.at<cv::Vec4b>(x, y) = pixel;
+
+					outputFile << "[" << blue << " " << green << " " << red << " " << alpha << "]," << '\n';
+				}
+				//std::cout << std::endl;
+				outputFile << std::endl << '\n';
+
+			}
+		}
+		else {
+			std::cout << "this is not a single channel image" << std::endl;
+		}
+
+		imwrite("lena_stogo.png", cv_img);
+		// Close the file.
+		outputFile.close();
+
+		//cv::waitKey(0);
+		return 0;
+
+
+	}
+
+public:
+	int readQRCodePixel() {
+		cv::Mat img ,new_img;
+
+		img = cv::imread("one_lemma_pic_2.png", CV_LOAD_IMAGE_UNCHANGED);
+		//img = cv::imread("mario_l_bw.png", CV_LOAD_IMAGE_UNCHANGED);
+
+		//
+	//	cv::Mat im_gray = cv::imread("pic.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+	//	cv::Mat img_bw = im_gray > 128;
+	//	imwrite("pic_gs.png", img_bw);
+
+		if (img.empty()) {
+			std::cout << "Error" << std::endl;
+			return -1;
+		}
+
+		//cv::namedWindow("New_image", CV_WINDOW_NORMAL);
+		//imshow("New_image", img);
+		std::ofstream outputFile;
+		outputFile.open("b.txt");
+
+
+
+		// print number of channels in image
+		//std::cout << "image channels: " << img.channels() << std::endl;
+		//std::cout << "Pixel value: " << std::endl;
+		outputFile << "image channels: " << img.channels() << '\n';
+		outputFile << "Y: " << img.cols << '\n';
+		outputFile << "X " << img.rows << '\n';
+		outputFile << "Pixel value: " << '\n';
+
+		// check if image is a single channel
+		if (img.channels() == 1) {
+			for (int y = 0; y < img.cols; y++) {
+				for (int x = 0; x < img.rows; x++) {
+					outputFile << "[" << y << " , " << x << "]";
+					cv::Scalar pixel = img.at<uchar>(x, y);
+					if (pixel.val[0] != 0) {
+						img.at<uchar>(x, y) = 255;
+						//	pixel.val[1] = 0;
+						//	pixel.val[2] = 0;
+					}
+					
+					//img.at<uchar>(x, y) = pixel;
+					//std::cout << pixel.val[0] << ",";
+					outputFile << pixel.val[0] << '\n';
+				}
+				std::cout << std::endl << '\n';
+			}
+		}
+		else if (img.channels() == 3) {
+			for (int y = 0; y < img.cols; y++) {
+				for (int x = 0; x < img.rows; x++) {
+					outputFile << "[" << y << " , " << x << "]";
+					cv::Vec3b pixel = img.at<cv::Vec3b>(x, y);
+					int blue = pixel.val[0];
+					int green = pixel.val[1];
+					int red = pixel.val[2];
+
+					//std::cout << "[" << blue << " " << green << " " << red << "],";
+					outputFile << "[" << blue << " " << green << " " << red << "]," << '\n';
+				}
+				//std::cout << std::endl;
+				outputFile << std::endl << '\n';
+
+			}
+		}
+		else if (img.channels() == 4) {
+			for (int y = 0; y < img.cols; y++) {
+				for (int x = 0; x < img.rows; x++) {
+					outputFile << "[" << y << " , " << x << "]";
+					cv::Vec4b pixel = img.at<cv::Vec4b>(x, y);
+				//	cv::Scalar new_pixel = new_img.at<uchar>(x, y);
+					int blue = pixel.val[0];
+					int green = pixel.val[1];
+					int red = pixel.val[2];
+					int alpha = pixel.val[3];
+				//	new_img.at<uchar>(x, y) = blue;
+					//std::cout << "[" << blue << " " << green << " " << red << "],";
+					outputFile << "[" << blue << " " << green << " " << red << " " << alpha << "]," << '\n';
+				}
+				//std::cout << std::endl;
+				outputFile << std::endl << '\n';
+
+			}
+		}
+		else {
+			std::cout << "this is not a single channel image" << std::endl;
+		}
+
+		imwrite("qr_sxtraxt_2.png", img);
+
+		// Close the file.
+		outputFile.close();
+
+		//cv::waitKey(0);
+		return 0;
+
+
+	}
+public:
+	int readFile() {
+	
+	cv::Mat colorImage = cv::imread("mario.png");
+
+    // First convert the image to grayscale.
+   // Mat grayImage;
+   // cvtColor(colorImage, grayImage, CV_RGB2GRAY);
+
+    // Then apply thresholding to make it binary.
+   // Mat binaryImage(grayImage.size(), grayImage.type());
+    //threshold(grayImage, binaryImage, 128, 255, CV_THRESH_BINARY);
+
+    // Open the file in write mode.
+    std :: ofstream outputFile;
+    outputFile.open("MyFile.txt");
+
+    // Iterate through pixels.
+    for (int r = 0; r < colorImage.rows; r++)
+    {
+        for (int c = 0; c < colorImage.cols; c++)
+        {
+            int pixel = colorImage.at<uchar>(r,c);
+
+            outputFile << pixel << '\t';
+        }
+        outputFile << std::endl;
+    }
+
+    // Close the file.
+    outputFile.close();
+    return 0;
+	}
+
 public:
 	int decodeFrames() {
 
@@ -108,10 +467,10 @@ public:
 				cv::Mat frame;
 				cap >> frame; // get the next frame from video
 				//frames.push_back(frame);
-             	///std::string filePath ="F://frames/" + std::to_string(static_cast<long long>(frameNum)) + ".png";
-				///cv::imwrite(filePath, frame);
+             	std::string filePath ="F://frames/" + std::to_string(static_cast<long long>(frameNum)) + ".png";
+				cv::imwrite(filePath, frame);
 				if (frameNum == 10) {
-					frame = LSB_Frame_Encoder("Test Vedio", frame);
+					////frame = LSB_Frame_Encoder("Test Vedio", frame);
 			    	//std::string filePath ="F://frames/" + std::to_string(static_cast<long long>(frameNum)) + ".png";
 			    	//cv::imwrite(filePath, frame);
 				}
@@ -300,5 +659,6 @@ public:
 
 				return msg;
 			}
+
 
 };

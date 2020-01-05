@@ -136,6 +136,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DctAlgo.cpp" />
     <ClCompile Include="DecoderAlgo.cpp" />
     <ClCompile Include="EncoderAlgo.cpp" />
     <ClCompile Include="ImageViwer.cpp" />

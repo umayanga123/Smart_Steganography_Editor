@@ -9,6 +9,7 @@
 #include "VideoHelperTest.cpp"
 #include "LSB_Vedio_Encoder.cpp"
 #include "LSB_Vedio_Decoder.cpp"
+#include "DctAlgo.cpp"
 
 namespace MainComponent {
 
@@ -311,11 +312,25 @@ namespace MainComponent {
 
 		private: System::Void TestBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 			VideoHelper vedioHelper;
-			//vedioHelper.decodeFrames();
-			int i = vedioHelper.splitFrames();
+		//	vedioHelper.decodeFrames();
+			//int i = vedioHelper.splitFrames();
+	   //      int i = vedioHelper.readPixel();
+	  //    int i = vedioHelper.readConvertPixel();
+	      int i = vedioHelper.readQRCodePixel();
 			if (i == 0) {
 			  MessageBox::Show("Finish Operation");
 			}
+
+			//----------------
+			//cv::Mat image = cv::imread("lena.jpg");
+			//DctAlgo dctAlgo;
+			//cv::Mat img = dctAlgo.encode_dct(image,"Hello world",0,0,1);
+			//MessageBox::Show("Finish Operation");
+
+			//std::string msg =dctAlgo.decode_dct(img, 1);
+			
+			//String^ str2 = gcnew String(msg.c_str());
+			//MessageBox::Show("Secret Message :" + str2, "title", MessageBoxButtons::OK);
 		}
 
 		private: System::Void Button1_Click_1(System::Object^ sender, System::EventArgs^ e) {

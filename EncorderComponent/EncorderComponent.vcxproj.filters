@@ -39,6 +39,9 @@
     <ClCompile Include="VideoHelperTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DctAlgo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
