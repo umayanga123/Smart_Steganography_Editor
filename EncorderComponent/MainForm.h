@@ -11,8 +11,7 @@
 #include "LSB_Vedio_Decoder.cpp"
 #include "DctAlgo.cpp"
 #include "ImageHelperForm.h"
-#include "QrCode.hpp"
-//using namespace qrcodegen;
+
 
 
 namespace MainComponent {

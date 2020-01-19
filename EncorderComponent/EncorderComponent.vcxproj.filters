@@ -45,9 +45,6 @@
     <ClCompile Include="ImageHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\abans\Downloads\QR-Code-generator-master\cpp\QrCode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
@@ -55,9 +52,6 @@
     </ClInclude>
     <ClInclude Include="ImageHelperForm.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\abans\Downloads\QR-Code-generator-master\cpp\QrCode.hpp">
-      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
