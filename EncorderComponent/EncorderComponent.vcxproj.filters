@@ -45,12 +45,18 @@
     <ClCompile Include="ImageHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VedioHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ImageHelperForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VedioHelperForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

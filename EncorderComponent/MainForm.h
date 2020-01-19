@@ -11,6 +11,7 @@
 #include "LSB_Vedio_Decoder.cpp"
 #include "DctAlgo.cpp"
 #include "ImageHelperForm.h"
+#include "VedioHelperForm.h"
 
 
 
@@ -56,6 +57,7 @@ namespace MainComponent {
 		private: System::Windows::Forms::Button^ button4;
 	    private: System::Windows::Forms::NumericUpDown^ numericUpDown1;
 	    private: System::Windows::Forms::Button^ button5;
+	private: System::Windows::Forms::Button^ button6;
 
 	    private: System::ComponentModel::IContainer^ components;
 	
@@ -77,6 +79,7 @@ namespace MainComponent {
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->button5 = (gcnew System::Windows::Forms::Button());
+			this->button6 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			this->SuspendLayout();
@@ -203,7 +206,7 @@ namespace MainComponent {
 			// 
 			// button5
 			// 
-			this->button5->Location = System::Drawing::Point(244, 356);
+			this->button5->Location = System::Drawing::Point(15, 315);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(148, 23);
 			this->button5->TabIndex = 13;
@@ -211,11 +214,22 @@ namespace MainComponent {
 			this->button5->UseVisualStyleBackColor = true;
 			this->button5->Click += gcnew System::EventHandler(this, &MainForm::Image_Form_Open_Btn_Click);
 			// 
+			// button6
+			// 
+			this->button6->Location = System::Drawing::Point(180, 315);
+			this->button6->Name = L"button6";
+			this->button6->Size = System::Drawing::Size(165, 23);
+			this->button6->TabIndex = 14;
+			this->button6->Text = L"Vedio Helper";
+			this->button6->UseVisualStyleBackColor = true;
+			this->button6->Click += gcnew System::EventHandler(this, &MainForm::Vedio_Form_Open_Btn_Click);
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(621, 391);
+			this->Controls->Add(this->button6);
 			this->Controls->Add(this->button5);
 			this->Controls->Add(this->numericUpDown1);
 			this->Controls->Add(this->button4);
@@ -359,41 +373,8 @@ namespace MainComponent {
 		}
 
 
-	private: System::Void LSB_V_E_Btn(System::Object^ sender, System::EventArgs^ e) {
-		String^ path;
-		if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-			if (openFileDialog->OpenFile() != nullptr) {
-				path = openFileDialog->InitialDirectory + openFileDialog->FileName;
-			}
-		}
-
-		if (path == nullptr) {
-			return;
-		}
-		std::string new_path = msclr::interop::marshal_as<std::string>(path);
-		System::String^ name = textBox1->Text;
-		if (name->Length < 1) {
-			MessageBox::Show("please enter secrect text", "title", MessageBoxButtons::OK);
-			return;
-		}
-
-		std::string s_text = msclr::interop::marshal_as<std::string>(textBox1->Text);
-		LSB_Vedio_Encoder lsb_encorder;
-		int i = lsb_encorder.encodeFrames(new_path ,s_text);
-		if (i == 0) {
-				MessageBox::Show("sucssfully LSB encorded vedio", "title", MessageBoxButtons::OK);
-			}
-			else {
-				MessageBox::Show("error code :" + i);
-			}
-
-		}
-
-
-		private: System::Void LSB_V_D_Btn(System::Object^ sender, System::EventArgs^ e) {
-			LSB_Vedio_Decoder LSB_decorder;
+		private: System::Void LSB_V_E_Btn(System::Object^ sender, System::EventArgs^ e) {
 			String^ path;
-
 			if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 				if (openFileDialog->OpenFile() != nullptr) {
 					path = openFileDialog->InitialDirectory + openFileDialog->FileName;
@@ -401,36 +382,77 @@ namespace MainComponent {
 			}
 
 			if (path == nullptr) {
-
+				return;
+			}
+			std::string new_path = msclr::interop::marshal_as<std::string>(path);
+			System::String^ name = textBox1->Text;
+			if (name->Length < 1) {
+				MessageBox::Show("please enter secrect text", "title", MessageBoxButtons::OK);
 				return;
 			}
 
-			System::Decimal framNumber =  numericUpDown1->Value;
-			std::string output_path = msclr::interop::marshal_as<std::string>(path);
-			std::string msg = LSB_decorder.decodeFrames(output_path ,(int)framNumber);
-			String^ str2 = gcnew String(msg.c_str());
-			MessageBox::Show("Secret Message :" + str2, "title", MessageBoxButtons::OK);
-		}
+			std::string s_text = msclr::interop::marshal_as<std::string>(textBox1->Text);
+			LSB_Vedio_Encoder lsb_encorder;
+			int i = lsb_encorder.encodeFrames(new_path ,s_text);
+			if (i == 0) {
+					MessageBox::Show("sucssfully LSB encorded vedio", "title", MessageBoxButtons::OK);
+				}
+				else {
+					MessageBox::Show("error code :" + i);
+				}
+
+			}
+
+
+			private: System::Void LSB_V_D_Btn(System::Object^ sender, System::EventArgs^ e) {
+				LSB_Vedio_Decoder LSB_decorder;
+				String^ path;
+
+				if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+					if (openFileDialog->OpenFile() != nullptr) {
+						path = openFileDialog->InitialDirectory + openFileDialog->FileName;
+					}
+				}
+
+				if (path == nullptr) {
+
+					return;
+				}
+
+				System::Decimal framNumber =  numericUpDown1->Value;
+				std::string output_path = msclr::interop::marshal_as<std::string>(path);
+				std::string msg = LSB_decorder.decodeFrames(output_path ,(int)framNumber);
+				String^ str2 = gcnew String(msg.c_str());
+				MessageBox::Show("Secret Message :" + str2, "title", MessageBoxButtons::OK);
+			}
 
 		
-	private: System::Void NumericUpDown1_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
+		private: System::Void NumericUpDown1_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
 
 
-	}
-private: System::Void MainForm_Load(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void OpenFileDialog_FileOk(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
-}
+		}
 
-//Open new Image Form
-private: System::Void Image_Form_Open_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
-	ImageHelperComponent::ImageHelperForm Imageform;
-	Imageform.ShowDialog();
-}
+		private: System::Void MainForm_Load(System::Object^ sender, System::EventArgs^ e) {
+		}
 
-private: System::Void PictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-};
+		private: System::Void OpenFileDialog_FileOk(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
+		}
+
+		//Open new Image Form
+		private: System::Void Image_Form_Open_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
+			ImageHelperComponent::ImageHelperForm Imageform;
+			Imageform.ShowDialog();
+		}
+
+		private: System::Void PictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
+		}
+
+	    //Open new Vedio Form
+		private: System::Void Vedio_Form_Open_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
+			VedioHelperComponent::VedioHelperForm Vedioform;
+			Vedioform.ShowDialog();
+		}
+	};
 }
 
 

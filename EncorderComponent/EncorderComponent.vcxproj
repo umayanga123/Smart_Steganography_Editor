@@ -147,6 +147,7 @@
     <ClCompile Include="LSB_Vedio_Encoder.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="ImageTest.cpp" />
+    <ClCompile Include="VedioHelper.cpp" />
     <ClCompile Include="VideoHelperTest.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +157,9 @@
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="VedioHelperForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ImageHelperForm.resx">
@@ -163,6 +167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VedioHelperForm.resx">
+      <DependentUpon>VedioHelperForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

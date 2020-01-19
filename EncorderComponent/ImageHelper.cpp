@@ -133,10 +133,11 @@ public:
 			return -1;
 		}
 
+		//qr code should be less than image
 		// check if image is a single channel
 		if (cv_img.channels() == 1) {
-			for (int y = 0; y < cv_img.cols; y++) {
-				for (int x = 0; x < cv_img.rows; x++) {
+			for (int y = 0; y < qr_img.cols; y++) {
+				for (int x = 0; x < qr_img.rows; x++) {
 					cv::Scalar pixel = qr_img.at<uchar>(x, y);
 					if (pixel.val[0] != 0) {
 						cv_img.at<uchar>(x, y) = 255;
@@ -146,8 +147,8 @@ public:
 			}
 		}
 		else if (cv_img.channels() == 3) {
-			for (int y = 0; y < cv_img.cols; y++) {
-				for (int x = 0; x < cv_img.rows; x++) {
+			for (int y = 0; y < qr_img.cols; y++) {
+				for (int x = 0; x < qr_img.rows; x++) {
 					cv::Vec3b pixel = cv_img.at<cv::Vec3b>(x, y);
 					cv::Scalar qr_pixel = qr_img.at<uchar>(x, y);
 					int blue = pixel.val[0];
@@ -165,8 +166,8 @@ public:
 			}
 		}
 		else if (cv_img.channels() == 4) {
-			for (int y = 0; y < cv_img.cols; y++) {
-				for (int x = 0; x < cv_img.rows; x++) {
+			for (int y = 0; y < qr_img.cols; y++) {
+				for (int x = 0; x < qr_img.rows; x++) {
 					cv::Vec4b pixel = cv_img.at<cv::Vec4b>(x, y);
 					cv::Scalar qr_pixel = qr_img.at<uchar>(x, y);
 					int blue = pixel.val[0];
@@ -240,6 +241,7 @@ public:
 		imwrite("output/de/decode_qr_code_" + path.substr(path.find_last_of("/\\") + 1), img_bw);
 
 		//read Data of QR code
+		//cv::Mat bbox, rectifiedImage;
 		cv::QRCodeDetector qrDecoder = cv::QRCodeDetector::QRCodeDetector();
 		std::string data = qrDecoder.detectAndDecode(img_bw);
 		if (data.length() > 0)
