@@ -136,9 +136,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="C:\Users\abans\Downloads\QR-Code-generator-master\cpp\QrCode.cpp" />
     <ClCompile Include="DctAlgo.cpp" />
     <ClCompile Include="DecoderAlgo.cpp" />
     <ClCompile Include="EncoderAlgo.cpp" />
+    <ClCompile Include="ImageHelper.cpp" />
     <ClCompile Include="ImageViwer.cpp" />
     <ClCompile Include="LSB_Vedio_Decoder.cpp" />
     <ClCompile Include="LSB_Vedio_Encoder.cpp" />
@@ -147,11 +149,18 @@
     <ClCompile Include="VideoHelperTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="C:\Users\abans\Downloads\QR-Code-generator-master\cpp\QrCode.hpp" />
+    <ClInclude Include="ImageHelperForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ImageHelperForm.resx">
+      <DependentUpon>ImageHelperForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
     </EmbeddedResource>

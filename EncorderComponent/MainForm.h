@@ -10,6 +10,10 @@
 #include "LSB_Vedio_Encoder.cpp"
 #include "LSB_Vedio_Decoder.cpp"
 #include "DctAlgo.cpp"
+#include "ImageHelperForm.h"
+#include "QrCode.hpp"
+//using namespace qrcodegen;
+
 
 namespace MainComponent {
 
@@ -52,6 +56,7 @@ namespace MainComponent {
 		private: System::Windows::Forms::Button^ button2;
 		private: System::Windows::Forms::Button^ button4;
 	    private: System::Windows::Forms::NumericUpDown^ numericUpDown1;
+	    private: System::Windows::Forms::Button^ button5;
 
 	    private: System::ComponentModel::IContainer^ components;
 	
@@ -72,6 +77,7 @@ namespace MainComponent {
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
+			this->button5 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			this->SuspendLayout();
@@ -136,6 +142,7 @@ namespace MainComponent {
 			// 
 			this->openFileDialog->FileName = L"openFileDialog";
 			this->openFileDialog->Title = L"select image";
+			this->openFileDialog->FileOk += gcnew System::ComponentModel::CancelEventHandler(this, &MainForm::OpenFileDialog_FileOk);
 			// 
 			// pictureBox1
 			// 
@@ -144,6 +151,7 @@ namespace MainComponent {
 			this->pictureBox1->Size = System::Drawing::Size(333, 147);
 			this->pictureBox1->TabIndex = 7;
 			this->pictureBox1->TabStop = false;
+			this->pictureBox1->Click += gcnew System::EventHandler(this, &MainForm::PictureBox1_Click);
 			// 
 			// testBtn
 			// 
@@ -194,11 +202,22 @@ namespace MainComponent {
 			this->numericUpDown1->TabIndex = 12;
 			this->numericUpDown1->ValueChanged += gcnew System::EventHandler(this, &MainForm::NumericUpDown1_ValueChanged);
 			// 
+			// button5
+			// 
+			this->button5->Location = System::Drawing::Point(244, 356);
+			this->button5->Name = L"button5";
+			this->button5->Size = System::Drawing::Size(148, 23);
+			this->button5->TabIndex = 13;
+			this->button5->Text = L"Image Helper";
+			this->button5->UseVisualStyleBackColor = true;
+			this->button5->Click += gcnew System::EventHandler(this, &MainForm::Image_Form_Open_Btn_Click);
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(621, 391);
+			this->Controls->Add(this->button5);
 			this->Controls->Add(this->numericUpDown1);
 			this->Controls->Add(this->button4);
 			this->Controls->Add(this->button2);
@@ -214,6 +233,7 @@ namespace MainComponent {
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
 			this->Name = L"MainForm";
 			this->Text = L"Steganography Application";
+			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
 			this->ResumeLayout(false);
@@ -398,6 +418,19 @@ namespace MainComponent {
 
 
 	}
+private: System::Void MainForm_Load(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void OpenFileDialog_FileOk(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
+}
+
+//Open new Image Form
+private: System::Void Image_Form_Open_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
+	ImageHelperComponent::ImageHelperForm Imageform;
+	Imageform.ShowDialog();
+}
+
+private: System::Void PictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }
 

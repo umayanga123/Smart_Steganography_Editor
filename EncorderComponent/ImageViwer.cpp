@@ -7,9 +7,6 @@ public:
 		cv::namedWindow(path.substr(path.find_last_of("/\\") + 1), cv::WindowFlags::WINDOW_NORMAL);
 		
 		// Convert to grayscale getting rid of alpha channel
-		//std::vector<cv::Mat> ch;
-		//cv::split(img, ch);
-
 		imshow(path.substr(path.find_last_of("/\\") + 1), img);
 		img.release();
 		return 0;
