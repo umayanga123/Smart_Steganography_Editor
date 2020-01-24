@@ -45,15 +45,12 @@ namespace ImageHelperComponent {
 	public: String^ image_path;
 	public: String^ qr_path;
 	private: System::Windows::Forms::Label^ label1;
-	public:
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Button^ button5;
 	private: System::Windows::Forms::Button^ button6;
 	private: System::Windows::Forms::Button^ button7;
 	private: System::Windows::Forms::Button^ button8;
-
-
-	protected:
+	private: System::Windows::Forms::CheckBox^ checkBox1;
 
 	private:
 
@@ -76,6 +73,7 @@ namespace ImageHelperComponent {
 			this->button6 = (gcnew System::Windows::Forms::Button());
 			this->button7 = (gcnew System::Windows::Forms::Button());
 			this->button8 = (gcnew System::Windows::Forms::Button());
+			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
 			this->SuspendLayout();
 			// 
 			// button1
@@ -173,7 +171,7 @@ namespace ImageHelperComponent {
 			// 
 			// button8
 			// 
-			this->button8->Location = System::Drawing::Point(281, 159);
+			this->button8->Location = System::Drawing::Point(281, 191);
 			this->button8->Name = L"button8";
 			this->button8->Size = System::Drawing::Size(75, 23);
 			this->button8->TabIndex = 10;
@@ -181,11 +179,22 @@ namespace ImageHelperComponent {
 			this->button8->UseVisualStyleBackColor = true;
 			this->button8->Click += gcnew System::EventHandler(this, &ImageHelperForm::decode_Image_Btn_Click);
 			// 
+			// checkBox1
+			// 
+			this->checkBox1->AutoSize = true;
+			this->checkBox1->Location = System::Drawing::Point(137, 195);
+			this->checkBox1->Name = L"checkBox1";
+			this->checkBox1->Size = System::Drawing::Size(93, 17);
+			this->checkBox1->TabIndex = 11;
+			this->checkBox1->Text = L"Hard Decode ";
+			this->checkBox1->UseVisualStyleBackColor = true;
+			// 
 			// ImageHelperForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(375, 285);
+			this->Controls->Add(this->checkBox1);
 			this->Controls->Add(this->button8);
 			this->Controls->Add(this->button7);
 			this->Controls->Add(this->button6);
@@ -204,68 +213,96 @@ namespace ImageHelperComponent {
 
 		}
 
-	private: System::Void back_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->Close();
-		this->~ImageHelperForm();
-	}
+	private: 
+		System::Void back_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->Close();
+			this->~ImageHelperForm();
+		}
 
-	private: System::Void open_Qr_Code_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: 
+		System::Void open_Qr_Code_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
 	  
-		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-			if (openFileDialog1->OpenFile() != nullptr) {
-				qr_path = openFileDialog1->InitialDirectory + openFileDialog1->FileName;
+			if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				if (openFileDialog1->OpenFile() != nullptr) {
+					qr_path = openFileDialog1->InitialDirectory + openFileDialog1->FileName;
+				}
+			}
+			if (qr_path == nullptr) {
+				return;
 			}
 		}
-		if (qr_path == nullptr) {
-			return;
-		}
-	}
 
-	private: System::Void open_Image_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
-		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-			if (openFileDialog1->OpenFile() != nullptr) {
-				image_path = openFileDialog1->InitialDirectory + openFileDialog1->FileName;
+	private: 
+		System::Void open_Image_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
+			if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				if (openFileDialog1->OpenFile() != nullptr) {
+					image_path = openFileDialog1->InitialDirectory + openFileDialog1->FileName;
+				}
 			}
-		}
-		if (image_path == nullptr) {
-			return;
-		}
+			if (image_path == nullptr) {
+				return;
+			}
 
-	}
+		}
 
 	private: System::Void OpenFileDialog1_FileOk(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
 
 	}
 
     /*encode QR code incide blue channel*/
-	private: System::Void encode_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
-		ImageHelper image_hepler;
-		ImageViwer imageViwer , imageViwer1,imageViwer2;
-	    System::String^ q_path = qr_path;
-		std::string qr_path = msclr::interop::marshal_as<std::string>(q_path);
+	private: 
+		System::Void encode_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
+			ImageHelper image_hepler;
+			ImageViwer imageViwer , imageViwer1,imageViwer2;
+			System::String^ q_path = qr_path;
+			std::string qr_path = msclr::interop::marshal_as<std::string>(q_path);
 		
-		System::String^ i_path = image_path;
-		std::string im_path = msclr::interop::marshal_as<std::string>(i_path);
+			System::String^ i_path = image_path;
+			std::string im_path = msclr::interop::marshal_as<std::string>(i_path);
 
-		int code= image_hepler.encodeQRCodeWithInImage(qr_path, im_path);
+			int code= image_hepler.encodeQRCodeWithInImage(qr_path, im_path);
 
-		if (code == 0) {
-			imageViwer.showImage(qr_path);
-			imageViwer1.showImage(im_path);
-			MessageBox::Show("Image Encode Complete", "Encode Complete", MessageBoxButtons::OK);
-		}
-		else {
-			MessageBox::Show("error code :" + code);
-		}
-
-		
-	}
+			if (code == 0) {
+				imageViwer.showImage(qr_path);
+				imageViwer1.showImage(im_path);
+				MessageBox::Show("Image Encode Complete", "Encode Complete", MessageBoxButtons::OK);
+			}
+			else {
+				MessageBox::Show("error code :" + code);
+			}
 	
-	private: System::Void ImageHelperForm_Load(System::Object^ sender, System::EventArgs^ e) {
-	}
+		}
+
+	/*Decode given image and take QR code*/
+	private: 
+		System::Void decode_Image_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
+			ImageHelper image_hepler;
+			System::String^ cam_imagr_path;
+			if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				if (openFileDialog1->OpenFile() != nullptr) {
+					cam_imagr_path = openFileDialog1->InitialDirectory + openFileDialog1->FileName;
+				}
+			}
+			if (cam_imagr_path == nullptr) {
+				return;
+			}
+
+			System::Boolean^ isChecked = checkBox1->Checked;
+			std::string cam_image = msclr::interop::marshal_as<std::string>(cam_imagr_path);
+			std::string code = image_hepler.decodeQRCodeFromImage(cam_image ,(bool)isChecked);
+
+			String^ msg = gcnew String(code.c_str());
+			MessageBox::Show("Decode Stego image is completed :" + msg, "Decode Stego Image", MessageBoxButtons::OK);
+		}
+
+	
+	private: 
+		System::Void ImageHelperForm_Load(System::Object^ sender, System::EventArgs^ e) {
+		}
 
     /*Print image information to file*/
-	private: System::Void image_Info_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: 
+		System::Void image_Info_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
 		ImageHelper image_hepler;
 		System::String^ info_path;
 		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
@@ -289,73 +326,54 @@ namespace ImageHelperComponent {
 	}
 
 	/*Devide Image Into multiple channels*/
-	private: System::Void convert_Image_Channel_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
-		ImageHelper image_hepler;
-		System::String^ channel_path;
-		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-			if (openFileDialog1->OpenFile() != nullptr) {
-				channel_path = openFileDialog1->InitialDirectory + openFileDialog1->FileName;
+	private: 
+		System::Void convert_Image_Channel_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
+			ImageHelper image_hepler;
+			System::String^ channel_path;
+			if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				if (openFileDialog1->OpenFile() != nullptr) {
+					channel_path = openFileDialog1->InitialDirectory + openFileDialog1->FileName;
+				}
+			}
+			if (channel_path == nullptr) {
+				return;
+			}
+
+			std::string image_channel = msclr::interop::marshal_as<std::string>(channel_path);
+			int code = image_hepler.convertImageToChannel(image_channel);
+
+			if (code == 0) {
+				MessageBox::Show("Operation Complete", "Image Channels", MessageBoxButtons::OK);
+			}
+			else {
+				MessageBox::Show("error code :" + code);
 			}
 		}
-		if (channel_path == nullptr) {
-			return;
-		}
 
-		std::string image_channel = msclr::interop::marshal_as<std::string>(channel_path);
-		int code = image_hepler.convertImageToChannel(image_channel);
-
-		if (code == 0) {
-			MessageBox::Show("Operation Complete", "Image Channels", MessageBoxButtons::OK);
-		}
-		else {
-			MessageBox::Show("error code :" + code);
-		}
-	}
-
-	private: System::Void convert_Image_To_Bw_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
-		ImageHelper image_hepler;
-		System::String^ rbg_path;
-		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-			if (openFileDialog1->OpenFile() != nullptr) {
-				rbg_path = openFileDialog1->InitialDirectory + openFileDialog1->FileName;
+	private: 
+		System::Void convert_Image_To_Bw_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
+			ImageHelper image_hepler;
+			System::String^ rbg_path;
+			if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				if (openFileDialog1->OpenFile() != nullptr) {
+					rbg_path = openFileDialog1->InitialDirectory + openFileDialog1->FileName;
+				}
 			}
-		}
-		if (rbg_path == nullptr) {
-			return;
-		}
-
-		std::string image_color = msclr::interop::marshal_as<std::string>(rbg_path);
-		int code = image_hepler.convertImageToBW(image_color);
-
-		if (code == 0) {
-			MessageBox::Show("Operation Complete", "Covert Image To BW", MessageBoxButtons::OK);
-		}
-		else {
-			MessageBox::Show("error code :" + code);
-		}
-	}
-
-    /*Decode given image and take QR code*/
-	private: System::Void decode_Image_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
-		ImageHelper image_hepler;
-		System::String^ cam_imagr_path;
-		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-			if (openFileDialog1->OpenFile() != nullptr) {
-				cam_imagr_path = openFileDialog1->InitialDirectory + openFileDialog1->FileName;
+			if (rbg_path == nullptr) {
+				return;
 			}
-		}
-		if (cam_imagr_path == nullptr) {
-			return;
-		}
 
-		std::string cam_image = msclr::interop::marshal_as<std::string>(cam_imagr_path);
-		std::string code = image_hepler.decodeQRCodeFromImage(cam_image);
+			std::string image_color = msclr::interop::marshal_as<std::string>(rbg_path);
+			int code = image_hepler.convertImageToBW(image_color);
 
-		String^ msg = gcnew String(code.c_str());
-		MessageBox::Show("Decode Stego image is completed :" + msg, "Decode Stego Image", MessageBoxButtons::OK);		
-	}
-
-};
+			if (code == 0) {
+				MessageBox::Show("Operation Complete", "Covert Image To BW", MessageBoxButtons::OK);
+			}
+			else {
+				MessageBox::Show("error code :" + code);
+			}
+		} 
+	};
 
 }
 

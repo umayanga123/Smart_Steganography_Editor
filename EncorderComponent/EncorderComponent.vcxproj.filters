@@ -22,6 +22,9 @@
     <Filter Include="Source Files\image">
       <UniqueIdentifier>{1afbf950-d903-4fb5-b576-aa83cf16ddf0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\algo">
+      <UniqueIdentifier>{5740a04e-857c-42d6-8cd6-867fb9ba8b80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainForm.cpp">
@@ -55,7 +58,7 @@
       <Filter>Source Files\image</Filter>
     </ClCompile>
     <ClCompile Include="DctAlgo.cpp">
-      <Filter>Source Files\image</Filter>
+      <Filter>Source Files\algo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

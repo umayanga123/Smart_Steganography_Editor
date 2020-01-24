@@ -154,7 +154,7 @@ public:
 
 /*Convert vedio to frame and decode QR code*/
 public:
-	std::string decodeQCodeFromVedio(std::string v_path , int frame_range) {
+	std::string decodeQCodeFromVedio(std::string v_path , int frame_range , bool isChecked) {
 
 		cv::VideoCapture cap(v_path);
 
@@ -188,7 +188,7 @@ public:
 				break;
 			}
 
-			decodeQRCodeFromImage(frame,i);
+			decodeQRCodeFromImage(frame,i, isChecked);
 
 			i++;
 
@@ -204,7 +204,7 @@ public:
 
 	/*Decode QR code from image and print data*/
 public:
-	void decodeQRCodeFromImage(cv::Mat frame,int i) {
+	void decodeQRCodeFromImage(cv::Mat frame,int i, bool isChecked) {
 
 		// Stores original image
 		cv::Mat stgo_image = frame;		
@@ -220,7 +220,26 @@ public:
 		imshow("ONE Chanel Image", one_ch_image);
 
 		//convert to BW
-		cv::Mat img_bw = one_ch_image > 128;
+		cv::Mat img_bw;
+		if (isChecked == true) {
+			one_ch_image.copyTo(img_bw);
+			for (int y = 0; y < one_ch_image.cols; y++) {
+				for (int x = 0; x < one_ch_image.rows; x++) {
+					int value = (int)one_ch_image.at<uchar>(x, y);
+					if (value != 0) {
+						img_bw.at<uchar>(x, y) = 255;
+					}
+					else {
+						img_bw.at<uchar>(x, y) = 0;
+					}
+				}
+			}
+		}
+		else {
+			img_bw = one_ch_image > 128;
+		}
+
+
 		cv::namedWindow("B_W Image", CV_WINDOW_AUTOSIZE);
 		imshow("B_W Image", img_bw);
 

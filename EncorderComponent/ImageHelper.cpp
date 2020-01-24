@@ -3,7 +3,7 @@
 /*image Related Operations*/
 class ImageHelper{
 
-/*Covert Image To Balck And White**/
+/*Convert Image To Black and White**/
 public:
 	int convertImageToBW(std::string path) {
 		cv::Mat im_gray = cv::imread(path, CV_LOAD_IMAGE_GRAYSCALE);
@@ -198,9 +198,10 @@ public:
 
 /*Decode QR code from image and print data*/
 public:
-	std::string decodeQRCodeFromImage(std::string path) {
+	std::string decodeQRCodeFromImage(std::string path ,bool isChecked) {
 
 		cv::Mat one_ch_image;
+		cv::Mat img_bw;
 		cv::Mat stgo_image = cv::imread(path, CV_LOAD_IMAGE_UNCHANGED);
 		if (stgo_image.empty()) {
 			return "ERROR";
@@ -216,25 +217,26 @@ public:
 		imshow("Blue_Channel_Only", one_ch_image);
 
 		//convert to BW
-		cv::Mat img_bw = one_ch_image > 128;
-
-		// check if image is a single channel
-		/*if (one_ch_image.channels() == 1) {
+		if (isChecked == true) {
+			one_ch_image.copyTo(img_bw);
 			for (int y = 0; y < one_ch_image.cols; y++) {
 				for (int x = 0; x < one_ch_image.rows; x++) {
-					cv::Scalar pixel = one_ch_image.at<uchar>(x, y);
-					if (pixel.val[0] != 0) {
-					//	one_ch_image.at<uchar>(x, y) = 255;
+					int value =(int)one_ch_image.at<uchar>(x, y);
+					if (value != 0) {
+						img_bw.at<uchar>(x, y) = 255;
 					}
 					else {
-					//	one_ch_image.at<uchar>(x, y) = 0;
+						img_bw.at<uchar>(x, y) = 0;
 					}
 				}
 			}
 		}
 		else {
-			std::cout << "this is not a single channel image" << std::endl;
-		}*/
+			img_bw = one_ch_image > 128;
+		}
+		
+
+		
 		
 		cv::namedWindow("QR_Code", CV_WINDOW_AUTOSIZE);
 		imshow("QR_Code", img_bw);

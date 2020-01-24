@@ -48,6 +48,7 @@ namespace VedioHelperComponent {
 	private: System::Windows::Forms::Button^ button6;
 	private: System::Windows::Forms::Button^ button7;
 	private: System::Windows::Forms::NumericUpDown^ numericUpDown1;
+	private: System::Windows::Forms::CheckBox^ checkBox1;
 	public:
 
 	private:
@@ -72,12 +73,13 @@ namespace VedioHelperComponent {
 			this->button6 = (gcnew System::Windows::Forms::Button());
 			this->button7 = (gcnew System::Windows::Forms::Button());
 			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
+			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(270, 226);
+			this->button1->Location = System::Drawing::Point(294, 226);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(75, 23);
 			this->button1->TabIndex = 0;
@@ -125,7 +127,7 @@ namespace VedioHelperComponent {
 			// 
 			// button4
 			// 
-			this->button4->Location = System::Drawing::Point(238, 29);
+			this->button4->Location = System::Drawing::Point(251, 29);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(118, 23);
 			this->button4->TabIndex = 5;
@@ -135,7 +137,7 @@ namespace VedioHelperComponent {
 			// 
 			// button5
 			// 
-			this->button5->Location = System::Drawing::Point(170, 180);
+			this->button5->Location = System::Drawing::Point(251, 188);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(118, 23);
 			this->button5->TabIndex = 6;
@@ -169,17 +171,28 @@ namespace VedioHelperComponent {
 			// 
 			// numericUpDown1
 			// 
-			this->numericUpDown1->Location = System::Drawing::Point(21, 180);
+			this->numericUpDown1->Location = System::Drawing::Point(12, 191);
 			this->numericUpDown1->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5000, 0, 0, 0 });
 			this->numericUpDown1->Name = L"numericUpDown1";
 			this->numericUpDown1->Size = System::Drawing::Size(128, 20);
 			this->numericUpDown1->TabIndex = 13;
 			// 
+			// checkBox1
+			// 
+			this->checkBox1->AutoSize = true;
+			this->checkBox1->Location = System::Drawing::Point(152, 195);
+			this->checkBox1->Name = L"checkBox1";
+			this->checkBox1->Size = System::Drawing::Size(93, 17);
+			this->checkBox1->TabIndex = 14;
+			this->checkBox1->Text = L"Hard Decode ";
+			this->checkBox1->UseVisualStyleBackColor = true;
+			// 
 			// VedioHelperForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(372, 261);
+			this->ClientSize = System::Drawing::Size(391, 261);
+			this->Controls->Add(this->checkBox1);
 			this->Controls->Add(this->numericUpDown1);
 			this->Controls->Add(this->button7);
 			this->Controls->Add(this->button6);
@@ -264,7 +277,9 @@ namespace VedioHelperComponent {
 
 			System::Decimal framNumber = numericUpDown1->Value;
 			std::string output_path = msclr::interop::marshal_as<std::string>(ev_path);
-			std::string msg = vedio_hepler.decodeQCodeFromVedio(output_path, (int)framNumber);
+			System::Boolean^ isChecked = checkBox1->Checked;
+
+			std::string msg = vedio_hepler.decodeQCodeFromVedio(output_path, (int)framNumber , (bool)isChecked);
 			String^ str2 = gcnew String(msg.c_str());
 			MessageBox::Show("Operation Complete" + str2, "title", MessageBoxButtons::OK);
 		}
