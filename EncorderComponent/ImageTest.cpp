@@ -1,6 +1,8 @@
 #include <opencv2/opencv.hpp>
 
-class Test {
+/*Test class*/
+class ImageTest {
+
 public:
 	int A() {
 		cv::Mat img = cv::imread("mario.png", cv::IMREAD_UNCHANGED);

@@ -86,8 +86,8 @@ public:
 			return -3;
 		}
 
-		// Writes the stegnographic image
-		imwrite("out_"+ path.substr(path.find_last_of("/\\") + 1), image);
+		// Write the stegnographic image
+		imwrite("output/otheir/out_"+ path.substr(path.find_last_of("/\\") + 1), image);
 
 		cv::destroyAllWindows();
 		image.release();

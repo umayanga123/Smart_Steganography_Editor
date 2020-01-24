@@ -1,6 +1,7 @@
 #include "opencv2/opencv.hpp"
 
-class VideoHelper {
+/*Test class*/
+class VideoHelperTest {
 
 
 public:

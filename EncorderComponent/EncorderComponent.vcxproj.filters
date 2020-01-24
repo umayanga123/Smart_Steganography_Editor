@@ -13,40 +13,49 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Test">
+      <UniqueIdentifier>{93e2bb45-cfc5-450f-abf4-1727ca2e0274}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\vedio">
+      <UniqueIdentifier>{45e4ed4a-0f1c-4887-b3b6-6e642552a90a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\image">
+      <UniqueIdentifier>{1afbf950-d903-4fb5-b576-aa83cf16ddf0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ImageTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MainForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EncoderAlgo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DecoderAlgo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageViwer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LSB_Vedio_Decoder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LSB_Vedio_Encoder.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="ImageTest.cpp">
+      <Filter>Source Files\Test</Filter>
     </ClCompile>
     <ClCompile Include="VideoHelperTest.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Test</Filter>
     </ClCompile>
-    <ClCompile Include="DctAlgo.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="LSB_Vedio_Decoder.cpp">
+      <Filter>Source Files\vedio</Filter>
     </ClCompile>
-    <ClCompile Include="ImageHelper.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="LSB_Vedio_Encoder.cpp">
+      <Filter>Source Files\vedio</Filter>
     </ClCompile>
     <ClCompile Include="VedioHelper.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\vedio</Filter>
+    </ClCompile>
+    <ClCompile Include="DecoderAlgo.cpp">
+      <Filter>Source Files\image</Filter>
+    </ClCompile>
+    <ClCompile Include="EncoderAlgo.cpp">
+      <Filter>Source Files\image</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageHelper.cpp">
+      <Filter>Source Files\image</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageViwer.cpp">
+      <Filter>Source Files\image</Filter>
+    </ClCompile>
+    <ClCompile Include="DctAlgo.cpp">
+      <Filter>Source Files\image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
