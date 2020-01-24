@@ -1,15 +1,11 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include "ImageTest.cpp"
 #include "msclr\marshal_cppstd.h"
 #include "EncoderAlgo.cpp"
 #include "DecoderAlgo.cpp"
-#include "ImageViwer.cpp"
-#include "VideoHelperTest.cpp"
 #include "LSB_Vedio_Encoder.cpp"
 #include "LSB_Vedio_Decoder.cpp"
-#include "DctAlgo.cpp"
 #include "ImageHelperForm.h"
 #include "VedioHelperForm.h"
 
@@ -41,40 +37,28 @@ namespace MainComponent {
 				}
 			}
 		private: System::Windows::Forms::TextBox^ textBox1;
-		private: System::Windows::Forms::Button^ viewImageBtn;
-
 		private: System::Windows::Forms::Button^ button3;
 		private: System::Windows::Forms::Button^ encodeBtn;
 		private: System::Windows::Forms::Button^ decodeBtn;
-
-
 		private: System::Windows::Forms::Label^ label1;
 		private: System::Windows::Forms::OpenFileDialog^ openFileDialog;
 		private: System::Windows::Forms::PictureBox^ pictureBox1;
-		private: System::Windows::Forms::Button^ testBtn;
-		private: System::Windows::Forms::Button^ button1;
 		private: System::Windows::Forms::Button^ button2;
 		private: System::Windows::Forms::Button^ button4;
 	    private: System::Windows::Forms::NumericUpDown^ numericUpDown1;
 	    private: System::Windows::Forms::Button^ button5;
-	private: System::Windows::Forms::Button^ button6;
-
+	    private: System::Windows::Forms::Button^ button6;
 	    private: System::ComponentModel::IContainer^ components;
-	
-		
 	
 		private:void InitializeComponent(void)
 		{
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->viewImageBtn = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->encodeBtn = (gcnew System::Windows::Forms::Button());
 			this->decodeBtn = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->openFileDialog = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
-			this->testBtn = (gcnew System::Windows::Forms::Button());
-			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
@@ -90,16 +74,6 @@ namespace MainComponent {
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(309, 20);
 			this->textBox1->TabIndex = 0;
-			// 
-			// viewImageBtn
-			// 
-			this->viewImageBtn->Location = System::Drawing::Point(441, 191);
-			this->viewImageBtn->Name = L"viewImageBtn";
-			this->viewImageBtn->Size = System::Drawing::Size(150, 23);
-			this->viewImageBtn->TabIndex = 2;
-			this->viewImageBtn->Text = L"View Image";
-			this->viewImageBtn->UseVisualStyleBackColor = true;
-			this->viewImageBtn->Click += gcnew System::EventHandler(this, &MainForm::viewImageBtn_Click);
 			// 
 			// button3
 			// 
@@ -136,9 +110,9 @@ namespace MainComponent {
 			this->label1->AutoSize = true;
 			this->label1->Location = System::Drawing::Point(12, 34);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(99, 13);
+			this->label1->Size = System::Drawing::Size(93, 13);
 			this->label1->TabIndex = 6;
-			this->label1->Text = L"Enter Secrect Text:";
+			this->label1->Text = L"Enter Secret Text:";
 			// 
 			// openFileDialog
 			// 
@@ -148,36 +122,16 @@ namespace MainComponent {
 			// 
 			// pictureBox1
 			// 
-			this->pictureBox1->Location = System::Drawing::Point(12, 67);
+			this->pictureBox1->Location = System::Drawing::Point(12, 107);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(333, 147);
+			this->pictureBox1->Size = System::Drawing::Size(579, 147);
 			this->pictureBox1->TabIndex = 7;
 			this->pictureBox1->TabStop = false;
 			this->pictureBox1->Click += gcnew System::EventHandler(this, &MainForm::PictureBox1_Click);
 			// 
-			// testBtn
-			// 
-			this->testBtn->Location = System::Drawing::Point(15, 356);
-			this->testBtn->Name = L"testBtn";
-			this->testBtn->Size = System::Drawing::Size(89, 23);
-			this->testBtn->TabIndex = 8;
-			this->testBtn->Text = L"Test";
-			this->testBtn->UseVisualStyleBackColor = true;
-			this->testBtn->Click += gcnew System::EventHandler(this, &MainForm::TestBtn_Click);
-			// 
-			// button1
-			// 
-			this->button1->Location = System::Drawing::Point(126, 356);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(75, 23);
-			this->button1->TabIndex = 9;
-			this->button1->Text = L"decode_text";
-			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &MainForm::Button1_Click_1);
-			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(441, 111);
+			this->button2->Location = System::Drawing::Point(126, 283);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(150, 23);
 			this->button2->TabIndex = 10;
@@ -187,7 +141,7 @@ namespace MainComponent {
 			// 
 			// button4
 			// 
-			this->button4->Location = System::Drawing::Point(441, 151);
+			this->button4->Location = System::Drawing::Point(126, 318);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(150, 23);
 			this->button4->TabIndex = 11;
@@ -197,16 +151,16 @@ namespace MainComponent {
 			// 
 			// numericUpDown1
 			// 
-			this->numericUpDown1->Location = System::Drawing::Point(351, 154);
+			this->numericUpDown1->Location = System::Drawing::Point(15, 286);
 			this->numericUpDown1->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5000, 0, 0, 0 });
 			this->numericUpDown1->Name = L"numericUpDown1";
-			this->numericUpDown1->Size = System::Drawing::Size(84, 20);
+			this->numericUpDown1->Size = System::Drawing::Size(96, 20);
 			this->numericUpDown1->TabIndex = 12;
 			this->numericUpDown1->ValueChanged += gcnew System::EventHandler(this, &MainForm::NumericUpDown1_ValueChanged);
 			// 
 			// button5
 			// 
-			this->button5->Location = System::Drawing::Point(15, 315);
+			this->button5->Location = System::Drawing::Point(12, 356);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(148, 23);
 			this->button5->TabIndex = 13;
@@ -216,7 +170,7 @@ namespace MainComponent {
 			// 
 			// button6
 			// 
-			this->button6->Location = System::Drawing::Point(180, 315);
+			this->button6->Location = System::Drawing::Point(180, 356);
 			this->button6->Name = L"button6";
 			this->button6->Size = System::Drawing::Size(165, 23);
 			this->button6->TabIndex = 14;
@@ -234,14 +188,11 @@ namespace MainComponent {
 			this->Controls->Add(this->numericUpDown1);
 			this->Controls->Add(this->button4);
 			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
-			this->Controls->Add(this->testBtn);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->decodeBtn);
 			this->Controls->Add(this->encodeBtn);
 			this->Controls->Add(this->button3);
-			this->Controls->Add(this->viewImageBtn);
 			this->Controls->Add(this->textBox1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
 			this->Name = L"MainForm";
@@ -254,39 +205,12 @@ namespace MainComponent {
 
 		}
 
-
-		private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e) {
-			String^ message = "Hello ";
-			String^ title = "Welcome";
-			Char a = '!'; //A managed character
-			MessageBox::Show("message" + textBox1->Text + a, "title", MessageBoxButtons::OK);
-
-		}
-
-
-		private: System::Void viewImageBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-			String^ path;
-			if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-				if (openFileDialog->OpenFile() != nullptr) {
-					path = openFileDialog->InitialDirectory + openFileDialog->FileName;
-				}
-			}
-
-			if (path == nullptr) {
-				return;
-			}
-			std::string new_path = msclr::interop::marshal_as<std::string>(path);
-
-			ImageViwer imageViwer;
-			imageViwer.showImage(new_path);
-		}
-
-
+		/*Exit from System*/
 		private: System::Void exitBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 			_Exit(10);
 		}
 
-
+        /*LSB image Encode*/
 		private: System::Void encodeBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 			String^ path;
 			if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
@@ -320,7 +244,7 @@ namespace MainComponent {
 			}
 		}
 
-
+		/*LSB image Decode*/
 		private: System::Void decodeBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 			DecorderAlgo decorder;
 			String^ path;
@@ -343,36 +267,9 @@ namespace MainComponent {
 			MessageBox::Show("Secret Message :" + str2, "title", MessageBoxButtons::OK);
 		}
 
-		private: System::Void TestBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-			VideoHelper vedioHelper;
-		//	vedioHelper.decodeFrames();
-			//int i = vedioHelper.splitFrames();
-	   //      int i = vedioHelper.readPixel();
-	  //    int i = vedioHelper.readConvertPixel();
-	      int i = vedioHelper.readQRCodePixel();
-			if (i == 0) {
-			  MessageBox::Show("Finish Operation");
-			}
+		
 
-			//----------------
-			//cv::Mat image = cv::imread("lena.jpg");
-			//DctAlgo dctAlgo;
-			//cv::Mat img = dctAlgo.encode_dct(image,"Hello world",0,0,1);
-			//MessageBox::Show("Finish Operation");
-
-			//std::string msg =dctAlgo.decode_dct(img, 1);
-			
-			//String^ str2 = gcnew String(msg.c_str());
-			//MessageBox::Show("Secret Message :" + str2, "title", MessageBoxButtons::OK);
-		}
-
-		private: System::Void Button1_Click_1(System::Object^ sender, System::EventArgs^ e) {
-			VideoHelper vedioHelper;
-			vedioHelper.decodeFrames();
-
-		}
-
-
+        /*LSB Vedio Encode*/
 		private: System::Void LSB_V_E_Btn(System::Object^ sender, System::EventArgs^ e) {
 			String^ path;
 			if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
@@ -403,33 +300,31 @@ namespace MainComponent {
 
 			}
 
+        /*LSB vedio decoder*/
+		private: System::Void LSB_V_D_Btn(System::Object^ sender, System::EventArgs^ e) {
+			LSB_Vedio_Decoder LSB_decorder;
+			String^ path;
 
-			private: System::Void LSB_V_D_Btn(System::Object^ sender, System::EventArgs^ e) {
-				LSB_Vedio_Decoder LSB_decorder;
-				String^ path;
-
-				if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-					if (openFileDialog->OpenFile() != nullptr) {
-						path = openFileDialog->InitialDirectory + openFileDialog->FileName;
-					}
+			if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				if (openFileDialog->OpenFile() != nullptr) {
+					path = openFileDialog->InitialDirectory + openFileDialog->FileName;
 				}
-
-				if (path == nullptr) {
-
-					return;
-				}
-
-				System::Decimal framNumber =  numericUpDown1->Value;
-				std::string output_path = msclr::interop::marshal_as<std::string>(path);
-				std::string msg = LSB_decorder.decodeFrames(output_path ,(int)framNumber);
-				String^ str2 = gcnew String(msg.c_str());
-				MessageBox::Show("Secret Message :" + str2, "title", MessageBoxButtons::OK);
 			}
+
+			if (path == nullptr) {
+
+				return;
+			}
+
+			System::Decimal framNumber =  numericUpDown1->Value;
+			std::string output_path = msclr::interop::marshal_as<std::string>(path);
+			std::string msg = LSB_decorder.decodeFrames(output_path ,(int)framNumber);
+			String^ str2 = gcnew String(msg.c_str());
+			MessageBox::Show("Secret Message :" + str2, "title", MessageBoxButtons::OK);
+		}
 
 		
 		private: System::Void NumericUpDown1_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
-
-
 		}
 
 		private: System::Void MainForm_Load(System::Object^ sender, System::EventArgs^ e) {
@@ -438,13 +333,13 @@ namespace MainComponent {
 		private: System::Void OpenFileDialog_FileOk(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
 		}
 
+		private: System::Void PictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
+		}
+
 		//Open new Image Form
 		private: System::Void Image_Form_Open_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
 			ImageHelperComponent::ImageHelperForm Imageform;
 			Imageform.ShowDialog();
-		}
-
-		private: System::Void PictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
 		}
 
 	    //Open new Vedio Form

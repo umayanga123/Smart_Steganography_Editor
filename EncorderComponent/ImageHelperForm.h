@@ -3,6 +3,7 @@
 
 #include "msclr\marshal_cppstd.h"
 #include "ImageHelper.cpp"
+#include "ImageViwer.cpp"
 
 namespace ImageHelperComponent {
 

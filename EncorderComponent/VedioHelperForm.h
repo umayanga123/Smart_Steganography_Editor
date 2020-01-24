@@ -169,10 +169,10 @@ namespace VedioHelperComponent {
 			// 
 			// numericUpDown1
 			// 
-			this->numericUpDown1->Location = System::Drawing::Point(29, 180);
+			this->numericUpDown1->Location = System::Drawing::Point(21, 180);
 			this->numericUpDown1->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5000, 0, 0, 0 });
 			this->numericUpDown1->Name = L"numericUpDown1";
-			this->numericUpDown1->Size = System::Drawing::Size(120, 20);
+			this->numericUpDown1->Size = System::Drawing::Size(128, 20);
 			this->numericUpDown1->TabIndex = 13;
 			// 
 			// VedioHelperForm
