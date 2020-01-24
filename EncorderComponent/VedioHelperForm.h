@@ -45,6 +45,9 @@ namespace VedioHelperComponent {
 	protected:
 	public: String^ vedio_path;
 	public: String^ qr_path;
+	private: System::Windows::Forms::Button^ button6;
+	private: System::Windows::Forms::Button^ button7;
+	public:
 
 	private:
 
@@ -65,6 +68,8 @@ namespace VedioHelperComponent {
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
+			this->button6 = (gcnew System::Windows::Forms::Button());
+			this->button7 = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// button1
@@ -127,7 +132,7 @@ namespace VedioHelperComponent {
 			// 
 			// button5
 			// 
-			this->button5->Location = System::Drawing::Point(238, 91);
+			this->button5->Location = System::Drawing::Point(238, 136);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(118, 23);
 			this->button5->TabIndex = 6;
@@ -139,11 +144,33 @@ namespace VedioHelperComponent {
 			// 
 			this->openFileDialog1->FileName = L"openFileDialog1";
 			// 
+			// button6
+			// 
+			this->button6->Location = System::Drawing::Point(21, 91);
+			this->button6->Name = L"button6";
+			this->button6->Size = System::Drawing::Size(128, 23);
+			this->button6->TabIndex = 7;
+			this->button6->Text = L"split/save";
+			this->button6->UseVisualStyleBackColor = true;
+			this->button6->Click += gcnew System::EventHandler(this, &VedioHelperForm::split_and_save_btn_Click);
+			// 
+			// button7
+			// 
+			this->button7->Location = System::Drawing::Point(21, 136);
+			this->button7->Name = L"button7";
+			this->button7->Size = System::Drawing::Size(128, 23);
+			this->button7->TabIndex = 8;
+			this->button7->Text = L"vedio info";
+			this->button7->UseVisualStyleBackColor = true;
+			this->button7->Click += gcnew System::EventHandler(this, &VedioHelperForm::video_information_btn_Click);
+			// 
 			// VedioHelperForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(372, 261);
+			this->Controls->Add(this->button7);
+			this->Controls->Add(this->button6);
 			this->Controls->Add(this->button5);
 			this->Controls->Add(this->button4);
 			this->Controls->Add(this->label2);
@@ -224,19 +251,71 @@ namespace VedioHelperComponent {
 
 
 			std::string e_path = msclr::interop::marshal_as<std::string>(ev_path);
-			std::string code = vedio_hepler.decodeQCodeFromVedio(e_path);
-			String^ msg = gcnew String(code.c_str());
+			String^ code = vedio_hepler.decodeQCodeFromVedio(e_path);
+			//String^ msg = gcnew String(code.c_str());
 
-			if (code != "ERROR") {
+			if (code == "ERROR") {
 				MessageBox::Show("ERROR");
 			}
 			else {
-				MessageBox::Show("Message :" + msg);
+				MessageBox::Show("Message :" + code);
 			}
 
 
 		}
 
+		/*Split vedio stream to frams set and save*/
+		private: System::Void split_and_save_btn_Click(System::Object^ sender, System::EventArgs^ e) {
+			VedioHelper vedio_hepler;
+			System::String^ v_path;
+
+			if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				if (openFileDialog1->OpenFile() != nullptr) {
+					v_path = openFileDialog1->InitialDirectory + openFileDialog1->FileName;
+				}
+			}
+			if (v_path == nullptr) {
+				return;
+			}
+
+
+			std::string e_path = msclr::interop::marshal_as<std::string>(v_path);
+			int code = vedio_hepler.extract_frames(e_path);
+		
+			if (code == 0) {
+				MessageBox::Show("Process Complete", "Process Complete", MessageBoxButtons::OK);
+			}
+			else {
+				MessageBox::Show("ERROR :" + code);
+			}
+		}
+
+	    /*vedio infromation*/
+		private: System::Void video_information_btn_Click(System::Object^ sender, System::EventArgs^ e) {
+			VedioHelper vedio_hepler;
+			System::String^ i_path;
+
+			if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				if (openFileDialog1->OpenFile() != nullptr) {
+					i_path = openFileDialog1->InitialDirectory + openFileDialog1->FileName;
+				}
+			}
+			if (i_path == nullptr) {
+				return;
+			}
+
+
+			std::string e_path = msclr::interop::marshal_as<std::string>(i_path);
+			std::string code = vedio_hepler.informationOfVedio(e_path);
+			String^ msg = gcnew String(code.c_str());
+
+			if (msg == "ERROR") {
+				MessageBox::Show("ERROR");
+			}
+			else {
+				MessageBox::Show("Informations :" + msg);
+			}
+		}
 	};
 }
 

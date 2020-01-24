@@ -43,8 +43,11 @@ public:
 				cv::Mat frame;
 				cap >> frame; // get the next frame from video
 
-				//Algorithem
-				frame = encodeQRCodeWithInImage(qr_img, frame);
+				
+				if (frameNum %50 == 0) {
+					//Algorithem
+					frame = encodeQRCodeWithInImage(qr_img, frame);
+				}
 
 				//If the VideoWriter object is not initialized successfully, exit the program
 				if (oVideoWriter.isOpened() == false)
@@ -116,7 +119,7 @@ public:
 						pixel.val[0] = 0;
 					}
 					else {
-						pixel.val[0] = 255;
+						//pixel.val[0] = 255;
 					}
 					cv_img.at<cv::Vec3b>(x, y) = pixel;
 				}
@@ -135,7 +138,7 @@ public:
 						pixel.val[0] = 0;
 					}
 					else {
-						pixel.val[0] = 255;
+						//pixel.val[0] = 255;
 					}
 
 					cv_img.at<cv::Vec4b>(x, y) = pixel;
@@ -151,7 +154,72 @@ public:
 
 
 public:
-	std::string decodeQCodeFromVedio(std::string v_path) {
-		return "Error";
+	System::String^ decodeQCodeFromVedio(std::string v_path) {
+		cv::VideoCapture cap(v_path);
+		double frames_per_second = cap.get(CV_CAP_PROP_FPS);
+		return frames_per_second.ToString();
 	}
+
+	
+/* This functions opens a video fileand extracts the framesand put them into a vector of Mat(its the class for representing an img) */
+public: 
+	int extract_frames(const std::string& videoFilePath) {
+		try {
+			//open the video file
+			cv::VideoCapture cap(videoFilePath); 
+
+			// check if we succeeded
+			if (!cap.isOpened()) { 
+				CV_Error(CV_StsError, "Can not open Video file");
+			}
+
+			//
+			int frame_width = static_cast<int>(cap.get(cv::VideoCaptureProperties::CAP_PROP_FRAME_WIDTH)); //get the width of frames of the video
+			int frame_height = static_cast<int>(cap.get(cv::VideoCaptureProperties::CAP_PROP_FRAME_HEIGHT));//get the height of frames of the video
+
+			cv::Size frame_size(frame_width, frame_height);
+
+			double frames_per_second = cap.get(CV_CAP_PROP_FPS);
+			// contains the number of frames in the video
+			int nbFrames = cap.get(CV_CAP_PROP_FRAME_COUNT);
+			int codec = cap.get(CV_CAP_PROP_FOURCC);
+		
+			for (int frameNum = 0; frameNum < cap.get(CV_CAP_PROP_FRAME_COUNT); frameNum++)
+			{
+				cv::Mat frame;
+				cap >> frame; 
+
+				std::string filePath = "F://frames/" + std::to_string(static_cast<long long>(frameNum)) + ".png";
+				cv::imwrite(filePath, frame);
+
+				if (frameNum == 10) {
+					//std::string filePath ="F://frames/" + std::to_string(static_cast<long long>(frameNum)) + ".png";
+					//cv::imwrite(filePath, frame);
+				}
+
+				//Wait for for 10 milliseconds until any key is pressed.  
+				//If the 'Esc' key is pressed, break the while loop.
+				//If any other key is pressed, continue the loop 
+				//If any key is not pressed within 10 milliseconds, continue the loop 
+				if (cv::waitKey(10) == 27)
+				{
+					break;
+				}
+			}
+		}
+		catch (cv::Exception& e) {
+			return -1;
+		}
+		return 0;
+	}
+
+/*information of vedio*/
+public:
+	std::string informationOfVedio(std::string v_path) {
+		cv::VideoCapture cap(v_path);
+		std::string frames_per_second = std::to_string(cap.get(CV_CAP_PROP_FPS));
+		std::string frame_count = std::to_string( cap.get(CV_CAP_PROP_FRAME_COUNT));
+		return "FPS:" + frames_per_second + "F Count:" + frame_count;
+	}
+
 };
