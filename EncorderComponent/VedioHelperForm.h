@@ -47,6 +47,7 @@ namespace VedioHelperComponent {
 	public: String^ qr_path;
 	private: System::Windows::Forms::Button^ button6;
 	private: System::Windows::Forms::Button^ button7;
+	private: System::Windows::Forms::NumericUpDown^ numericUpDown1;
 	public:
 
 	private:
@@ -70,6 +71,8 @@ namespace VedioHelperComponent {
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->button6 = (gcnew System::Windows::Forms::Button());
 			this->button7 = (gcnew System::Windows::Forms::Button());
+			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// button1
@@ -132,7 +135,7 @@ namespace VedioHelperComponent {
 			// 
 			// button5
 			// 
-			this->button5->Location = System::Drawing::Point(238, 136);
+			this->button5->Location = System::Drawing::Point(170, 180);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(118, 23);
 			this->button5->TabIndex = 6;
@@ -164,11 +167,20 @@ namespace VedioHelperComponent {
 			this->button7->UseVisualStyleBackColor = true;
 			this->button7->Click += gcnew System::EventHandler(this, &VedioHelperForm::video_information_btn_Click);
 			// 
+			// numericUpDown1
+			// 
+			this->numericUpDown1->Location = System::Drawing::Point(29, 180);
+			this->numericUpDown1->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5000, 0, 0, 0 });
+			this->numericUpDown1->Name = L"numericUpDown1";
+			this->numericUpDown1->Size = System::Drawing::Size(120, 20);
+			this->numericUpDown1->TabIndex = 13;
+			// 
 			// VedioHelperForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(372, 261);
+			this->Controls->Add(this->numericUpDown1);
 			this->Controls->Add(this->button7);
 			this->Controls->Add(this->button6);
 			this->Controls->Add(this->button5);
@@ -180,6 +192,7 @@ namespace VedioHelperComponent {
 			this->Controls->Add(this->button1);
 			this->Name = L"VedioHelperForm";
 			this->Text = L"VedioHelperForm";
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -249,22 +262,14 @@ namespace VedioHelperComponent {
 				return;
 			}
 
-
-			std::string e_path = msclr::interop::marshal_as<std::string>(ev_path);
-			String^ code = vedio_hepler.decodeQCodeFromVedio(e_path);
-			//String^ msg = gcnew String(code.c_str());
-
-			if (code == "ERROR") {
-				MessageBox::Show("ERROR");
-			}
-			else {
-				MessageBox::Show("Message :" + code);
-			}
-
-
+			System::Decimal framNumber = numericUpDown1->Value;
+			std::string output_path = msclr::interop::marshal_as<std::string>(ev_path);
+			std::string msg = vedio_hepler.decodeQCodeFromVedio(output_path, (int)framNumber);
+			String^ str2 = gcnew String(msg.c_str());
+			MessageBox::Show("Operation Complete" + str2, "title", MessageBoxButtons::OK);
 		}
 
-		/*Split vedio stream to frams set and save*/
+		/*Split vedio stream to frames set and save*/
 		private: System::Void split_and_save_btn_Click(System::Object^ sender, System::EventArgs^ e) {
 			VedioHelper vedio_hepler;
 			System::String^ v_path;

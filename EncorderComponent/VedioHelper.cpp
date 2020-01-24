@@ -152,14 +152,81 @@ public:
 		return cv_img;
 	}
 
-
+/*Convert vedio to frame and decode QR code*/
 public:
-	System::String^ decodeQCodeFromVedio(std::string v_path) {
+	std::string decodeQCodeFromVedio(std::string v_path , int frame_range) {
+
 		cv::VideoCapture cap(v_path);
-		double frames_per_second = cap.get(CV_CAP_PROP_FPS);
-		return frames_per_second.ToString();
+
+		// Check if camera opened successfully
+		if (!cap.isOpened()) {
+			return "Error";
+		}
+		double count = cap.get(CV_CAP_PROP_FRAME_COUNT);
+
+		if (frame_range < 0 || count < frame_range) {
+			cap.release();
+			return "Max Frame count  should be:" + std::to_string(count);
+		}
+
+		int i = 0;
+		while (1) {
+
+			cv::Mat frame;
+
+			// Capture frame-by-frame
+			cap >> frame;
+
+			// If the frame is empty, break immediately
+			if (frame.empty()) {
+				cap.release();
+				break;
+			}
+
+			if (i == frame_range) {
+				cap.release();
+				break;
+			}
+
+			decodeQRCodeFromImage(frame,i);
+
+			i++;
+
+			// Press  ESC on keyboard to exit
+			char c = (char)cv::waitKey(25);
+			if (c == 27)
+				break;
+		}
+
+		return "End Operation";
 	}
 
+
+	/*Decode QR code from image and print data*/
+public:
+	void decodeQRCodeFromImage(cv::Mat frame,int i) {
+
+		// Stores original image
+		cv::Mat stgo_image = frame;		
+		cv::Mat one_ch_image;
+
+		cv::Mat rgbchannel[3];
+		// The actual splitting.
+		split(stgo_image, rgbchannel);
+
+		//Blue channel Seperate
+		one_ch_image = rgbchannel[0];
+		cv::namedWindow("ONE Chanel Image", CV_WINDOW_AUTOSIZE);
+		imshow("ONE Chanel Image", one_ch_image);
+
+		//convert to BW
+		cv::Mat img_bw = one_ch_image > 128;
+		cv::namedWindow("B_W Image", CV_WINDOW_AUTOSIZE);
+		imshow("B_W Image", img_bw);
+
+		std::string filePath = "F://vo_frames/" + std::to_string(static_cast<long long>(i)) + ".png";
+		cv::imwrite(filePath, img_bw);
+	}
 	
 /* This functions opens a video fileand extracts the framesand put them into a vector of Mat(its the class for representing an img) */
 public: 
