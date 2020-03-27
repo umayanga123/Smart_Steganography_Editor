@@ -49,9 +49,11 @@ namespace MainComponent {
 	    private: System::Windows::Forms::Button^ button5;
 	    private: System::Windows::Forms::Button^ button6;
 	    private: System::ComponentModel::IContainer^ components;
-	
+	    
+
 		private:void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->encodeBtn = (gcnew System::Windows::Forms::Button());
@@ -77,7 +79,7 @@ namespace MainComponent {
 			// 
 			// button3
 			// 
-			this->button3->Location = System::Drawing::Point(516, 356);
+			this->button3->Location = System::Drawing::Point(360, 331);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(75, 23);
 			this->button3->TabIndex = 3;
@@ -87,21 +89,21 @@ namespace MainComponent {
 			// 
 			// encodeBtn
 			// 
-			this->encodeBtn->Location = System::Drawing::Point(441, 31);
+			this->encodeBtn->Location = System::Drawing::Point(285, 67);
 			this->encodeBtn->Name = L"encodeBtn";
 			this->encodeBtn->Size = System::Drawing::Size(150, 23);
 			this->encodeBtn->TabIndex = 4;
-			this->encodeBtn->Text = L"Encode";
+			this->encodeBtn->Text = L"LSB Encode";
 			this->encodeBtn->UseVisualStyleBackColor = true;
 			this->encodeBtn->Click += gcnew System::EventHandler(this, &MainForm::encodeBtn_Click);
 			// 
 			// decodeBtn
 			// 
-			this->decodeBtn->Location = System::Drawing::Point(441, 67);
+			this->decodeBtn->Location = System::Drawing::Point(285, 106);
 			this->decodeBtn->Name = L"decodeBtn";
 			this->decodeBtn->Size = System::Drawing::Size(150, 23);
 			this->decodeBtn->TabIndex = 5;
-			this->decodeBtn->Text = L"Decode";
+			this->decodeBtn->Text = L"LSB Decode";
 			this->decodeBtn->UseVisualStyleBackColor = true;
 			this->decodeBtn->Click += gcnew System::EventHandler(this, &MainForm::decodeBtn_Click);
 			// 
@@ -122,16 +124,23 @@ namespace MainComponent {
 			// 
 			// pictureBox1
 			// 
-			this->pictureBox1->Location = System::Drawing::Point(12, 107);
+		
+			
+			//pictureBox1->Image = bmp;
+		    //pictureBox1->SizeMode = PictureBoxSizeMode::CenterImage;
+		    // Bitmap^ bmp = gcnew Bitmap("ic_launcher.bmp");
+			//resources->GetObject("ic_launcher");
+			//this->pictureBox1->Image = gcnew Bitmap("ic_launcher.bmp");
+			this->pictureBox1->Location = System::Drawing::Point(126, 67);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(579, 147);
+			this->pictureBox1->Size = System::Drawing::Size(142, 139);
 			this->pictureBox1->TabIndex = 7;
 			this->pictureBox1->TabStop = false;
 			this->pictureBox1->Click += gcnew System::EventHandler(this, &MainForm::PictureBox1_Click);
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(126, 283);
+			this->button2->Location = System::Drawing::Point(285, 209);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(150, 23);
 			this->button2->TabIndex = 10;
@@ -141,7 +150,7 @@ namespace MainComponent {
 			// 
 			// button4
 			// 
-			this->button4->Location = System::Drawing::Point(126, 318);
+			this->button4->Location = System::Drawing::Point(285, 238);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(150, 23);
 			this->button4->TabIndex = 11;
@@ -151,7 +160,7 @@ namespace MainComponent {
 			// 
 			// numericUpDown1
 			// 
-			this->numericUpDown1->Location = System::Drawing::Point(15, 286);
+			this->numericUpDown1->Location = System::Drawing::Point(172, 212);
 			this->numericUpDown1->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5000, 0, 0, 0 });
 			this->numericUpDown1->Name = L"numericUpDown1";
 			this->numericUpDown1->Size = System::Drawing::Size(96, 20);
@@ -160,21 +169,21 @@ namespace MainComponent {
 			// 
 			// button5
 			// 
-			this->button5->Location = System::Drawing::Point(12, 356);
+			this->button5->Location = System::Drawing::Point(110, 287);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(148, 23);
 			this->button5->TabIndex = 13;
-			this->button5->Text = L"Image Helper";
+			this->button5->Text = L"Image Encode/Decode";
 			this->button5->UseVisualStyleBackColor = true;
 			this->button5->Click += gcnew System::EventHandler(this, &MainForm::Image_Form_Open_Btn_Click);
 			// 
 			// button6
 			// 
-			this->button6->Location = System::Drawing::Point(180, 356);
+			this->button6->Location = System::Drawing::Point(274, 287);
 			this->button6->Name = L"button6";
 			this->button6->Size = System::Drawing::Size(165, 23);
 			this->button6->TabIndex = 14;
-			this->button6->Text = L"Vedio Helper";
+			this->button6->Text = L"Vedio Encode/Decode";
 			this->button6->UseVisualStyleBackColor = true;
 			this->button6->Click += gcnew System::EventHandler(this, &MainForm::Vedio_Form_Open_Btn_Click);
 			// 
@@ -182,7 +191,7 @@ namespace MainComponent {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(621, 391);
+			this->ClientSize = System::Drawing::Size(461, 375);
 			this->Controls->Add(this->button6);
 			this->Controls->Add(this->button5);
 			this->Controls->Add(this->numericUpDown1);
@@ -196,7 +205,7 @@ namespace MainComponent {
 			this->Controls->Add(this->textBox1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
 			this->Name = L"MainForm";
-			this->Text = L"Steganography Application";
+			this->Text = L"SVSM Encoder Application";
 			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
@@ -234,9 +243,9 @@ namespace MainComponent {
 			int i = encorder.LSB_encoder(s_text , new_path);
 			if (i == 0) {
 				MessageBox::Show("sucssfully encorded image", "title", MessageBoxButtons::OK);
-				Bitmap^ bmp = gcnew Bitmap(path);
-				pictureBox1->Image = bmp;
-				pictureBox1->SizeMode = PictureBoxSizeMode::CenterImage;
+				//Bitmap^ bmp = gcnew Bitmap(path);
+				//pictureBox1->Image = bmp;
+				//pictureBox1->SizeMode = PictureBoxSizeMode::CenterImage;
 
 			}
 			else {

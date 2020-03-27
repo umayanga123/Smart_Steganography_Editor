@@ -5,7 +5,7 @@ class VedioHelper {
 
 /*put QR code inside  vedop the blue chanel*/
 public:
-	int encodeQRCodeWithInVedio(std::string qr_path, std::string videoFilePath) {
+	int encodeQRCodeWithInVedio(std::string qr_path, std::string videoFilePath ,bool isHardEncode) {
 
 		cv::Mat qr_img;
 		qr_img = cv::imread(qr_path, CV_LOAD_IMAGE_UNCHANGED);
@@ -44,9 +44,9 @@ public:
 				cap >> frame; // get the next frame from video
 
 				
-				if (frameNum %50 == 0) {
+				if (frameNum %5 == 0) {
 					//Algorithem
-					frame = encodeQRCodeWithInImage(qr_img, frame);
+					frame = encodeQRCodeWithInImage(qr_img, frame , isHardEncode);
 				}
 
 				//If the VideoWriter object is not initialized successfully, exit the program
@@ -82,7 +82,7 @@ public:
 
 /*put QR code inside the blue chanel*/
 public:
-	cv::Mat encodeQRCodeWithInImage(cv::Mat qr_path, cv::Mat img_path) {
+	cv::Mat encodeQRCodeWithInImage(cv::Mat qr_path, cv::Mat img_path ,bool isChecked) {
 
 		//
 		cv::Mat qr_img = qr_path;
@@ -118,8 +118,9 @@ public:
 					if (qr_pixel.val[0] == 0) {
 						pixel.val[0] = 0;
 					}
-					else {
-						//pixel.val[0] = 255;
+
+					if (qr_pixel.val[0] != 0 && isChecked == true) {
+						pixel.val[0] = 255;
 					}
 					cv_img.at<cv::Vec3b>(x, y) = pixel;
 				}
@@ -137,8 +138,9 @@ public:
 					if (qr_pixel.val[0] == 0) {
 						pixel.val[0] = 0;
 					}
-					else {
-						//pixel.val[0] = 255;
+
+					if (qr_pixel.val[0] != 0 && isChecked == true) {
+						pixel.val[0] = 255;
 					}
 
 					cv_img.at<cv::Vec4b>(x, y) = pixel;
@@ -154,7 +156,7 @@ public:
 
 /*Convert vedio to frame and decode QR code*/
 public:
-	std::string decodeQCodeFromVedio(std::string v_path , int frame_range , bool isChecked) {
+	std::string decodeQCodeFromVedio(std::string v_path , int frame_range ) {
 
 		cv::VideoCapture cap(v_path);
 
@@ -188,7 +190,7 @@ public:
 				break;
 			}
 
-			decodeQRCodeFromImage(frame,i, isChecked);
+			decodeQRCodeFromImage(frame,i);
 
 			i++;
 
@@ -204,7 +206,7 @@ public:
 
 	/*Decode QR code from image and print data*/
 public:
-	void decodeQRCodeFromImage(cv::Mat frame,int i, bool isChecked) {
+	void decodeQRCodeFromImage(cv::Mat frame,int i) {
 
 		// Stores original image
 		cv::Mat stgo_image = frame;		
@@ -221,7 +223,7 @@ public:
 
 		//convert to BW
 		cv::Mat img_bw;
-		if (isChecked == true) {
+		/*if (isChecked == true) {
 			one_ch_image.copyTo(img_bw);
 			for (int y = 0; y < one_ch_image.cols; y++) {
 				for (int x = 0; x < one_ch_image.rows; x++) {
@@ -235,9 +237,9 @@ public:
 				}
 			}
 		}
-		else {
+		else {*/
 			img_bw = one_ch_image > 128;
-		}
+		//}
 
 
 		cv::namedWindow("B_W Image", CV_WINDOW_AUTOSIZE);

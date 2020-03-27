@@ -175,6 +175,9 @@
   <ItemGroup>
     <ResourceCompile Include="SteganographyEditor.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="ic_launcher.bmp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

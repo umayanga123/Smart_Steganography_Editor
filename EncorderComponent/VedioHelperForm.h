@@ -137,7 +137,7 @@ namespace VedioHelperComponent {
 			// 
 			// button5
 			// 
-			this->button5->Location = System::Drawing::Point(251, 188);
+			this->button5->Location = System::Drawing::Point(251, 171);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(118, 23);
 			this->button5->TabIndex = 6;
@@ -151,7 +151,7 @@ namespace VedioHelperComponent {
 			// 
 			// button6
 			// 
-			this->button6->Location = System::Drawing::Point(21, 91);
+			this->button6->Location = System::Drawing::Point(74, 110);
 			this->button6->Name = L"button6";
 			this->button6->Size = System::Drawing::Size(128, 23);
 			this->button6->TabIndex = 7;
@@ -161,9 +161,9 @@ namespace VedioHelperComponent {
 			// 
 			// button7
 			// 
-			this->button7->Location = System::Drawing::Point(21, 136);
+			this->button7->Location = System::Drawing::Point(251, 110);
 			this->button7->Name = L"button7";
-			this->button7->Size = System::Drawing::Size(128, 23);
+			this->button7->Size = System::Drawing::Size(118, 23);
 			this->button7->TabIndex = 8;
 			this->button7->Text = L"vedio info";
 			this->button7->UseVisualStyleBackColor = true;
@@ -171,7 +171,7 @@ namespace VedioHelperComponent {
 			// 
 			// numericUpDown1
 			// 
-			this->numericUpDown1->Location = System::Drawing::Point(12, 191);
+			this->numericUpDown1->Location = System::Drawing::Point(74, 174);
 			this->numericUpDown1->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5000, 0, 0, 0 });
 			this->numericUpDown1->Name = L"numericUpDown1";
 			this->numericUpDown1->Size = System::Drawing::Size(128, 20);
@@ -180,11 +180,11 @@ namespace VedioHelperComponent {
 			// checkBox1
 			// 
 			this->checkBox1->AutoSize = true;
-			this->checkBox1->Location = System::Drawing::Point(152, 195);
+			this->checkBox1->Location = System::Drawing::Point(251, 68);
 			this->checkBox1->Name = L"checkBox1";
-			this->checkBox1->Size = System::Drawing::Size(93, 17);
+			this->checkBox1->Size = System::Drawing::Size(89, 17);
 			this->checkBox1->TabIndex = 14;
-			this->checkBox1->Text = L"Hard Decode ";
+			this->checkBox1->Text = L"Hard Encode";
 			this->checkBox1->UseVisualStyleBackColor = true;
 			// 
 			// VedioHelperForm
@@ -204,7 +204,7 @@ namespace VedioHelperComponent {
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
 			this->Name = L"VedioHelperForm";
-			this->Text = L"VedioHelperForm";
+			this->Text = L"Vedio Menu";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -250,7 +250,8 @@ namespace VedioHelperComponent {
 			System::String^ v_path = vedio_path;
 			std::string im_path = msclr::interop::marshal_as<std::string>(v_path);
 
-			int code = vedio_hepler.encodeQRCodeWithInVedio(qr_path, im_path);
+			System::Boolean^ isChecked = checkBox1->Checked;
+			int code = vedio_hepler.encodeQRCodeWithInVedio(qr_path, im_path, (bool)isChecked);
 
 			if (code == 0) {
 				MessageBox::Show("Vedio Encode Complete", "Encode Complete", MessageBoxButtons::OK);
@@ -277,9 +278,8 @@ namespace VedioHelperComponent {
 
 			System::Decimal framNumber = numericUpDown1->Value;
 			std::string output_path = msclr::interop::marshal_as<std::string>(ev_path);
-			System::Boolean^ isChecked = checkBox1->Checked;
-
-			std::string msg = vedio_hepler.decodeQCodeFromVedio(output_path, (int)framNumber , (bool)isChecked);
+			
+			std::string msg = vedio_hepler.decodeQCodeFromVedio(output_path, (int)framNumber);
 			String^ str2 = gcnew String(msg.c_str());
 			MessageBox::Show("Operation Complete" + str2, "title", MessageBoxButtons::OK);
 		}

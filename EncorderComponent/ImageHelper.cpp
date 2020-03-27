@@ -120,13 +120,17 @@ public:
 
 /*put QR code inside the blue chanel*/
 public:
-	int encodeQRCodeWithInImage(std::string qr_path ,std::string img_path) {
+	int encodeQRCodeWithInImage(std::string qr_path ,std::string img_path, bool isChecked) {
 
 		cv::Mat qr_img;
 		cv::Mat	cv_img;
 
 		qr_img = cv::imread(qr_path, CV_LOAD_IMAGE_UNCHANGED);
 		cv_img = cv::imread(img_path, CV_LOAD_IMAGE_UNCHANGED);
+
+		
+		// The actual splitting.
+	
 
 		//
 		if (qr_img.empty() | cv_img.empty()) {
@@ -158,7 +162,9 @@ public:
 					if (qr_pixel.val[0] == 0) {
 						pixel.val[0] = 0;
 					}
-					else {
+
+					//hard decode
+					if(qr_pixel.val[0] != 0 && isChecked == true) {
 						pixel.val[0] = 255;
 					}
 					cv_img.at<cv::Vec3b>(x, y) = pixel;
@@ -177,10 +183,11 @@ public:
 					if (qr_pixel.val[0] == 0) {
 						pixel.val[0] = 0;
 					}
-					else {
+					
+					//hard decode
+					if (qr_pixel.val[0] != 0 && isChecked == true) {
 						pixel.val[0] = 255;
 					}
-
 					cv_img.at<cv::Vec4b>(x, y) = pixel;
 				}
 			}
@@ -198,7 +205,7 @@ public:
 
 /*Decode QR code from image and print data*/
 public:
-	std::string decodeQRCodeFromImage(std::string path ,bool isChecked) {
+	std::string decodeQRCodeFromImage(std::string path) {
 
 		cv::Mat one_ch_image;
 		cv::Mat img_bw;
@@ -217,7 +224,7 @@ public:
 		imshow("Blue_Channel_Only", one_ch_image);
 
 		//convert to BW
-		if (isChecked == true) {
+		/*if (isChecked == true) {
 			one_ch_image.copyTo(img_bw);
 			for (int y = 0; y < one_ch_image.cols; y++) {
 				for (int x = 0; x < one_ch_image.rows; x++) {
@@ -231,9 +238,9 @@ public:
 				}
 			}
 		}
-		else {
-			img_bw = one_ch_image > 128;
-		}
+		else {*/
+		img_bw = one_ch_image > 128;
+		//}
 		
 
 		

@@ -182,11 +182,11 @@ namespace ImageHelperComponent {
 			// checkBox1
 			// 
 			this->checkBox1->AutoSize = true;
-			this->checkBox1->Location = System::Drawing::Point(137, 195);
+			this->checkBox1->Location = System::Drawing::Point(263, 77);
 			this->checkBox1->Name = L"checkBox1";
-			this->checkBox1->Size = System::Drawing::Size(93, 17);
+			this->checkBox1->Size = System::Drawing::Size(89, 17);
 			this->checkBox1->TabIndex = 11;
-			this->checkBox1->Text = L"Hard Decode ";
+			this->checkBox1->Text = L"Hard Encode";
 			this->checkBox1->UseVisualStyleBackColor = true;
 			// 
 			// ImageHelperForm
@@ -206,7 +206,7 @@ namespace ImageHelperComponent {
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button1);
 			this->Name = L"ImageHelperForm";
-			this->Text = L"ImageHelperForm";
+			this->Text = L"Image Menu";
 			this->Load += gcnew System::EventHandler(this, &ImageHelperForm::ImageHelperForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -259,8 +259,8 @@ namespace ImageHelperComponent {
 		
 			System::String^ i_path = image_path;
 			std::string im_path = msclr::interop::marshal_as<std::string>(i_path);
-
-			int code= image_hepler.encodeQRCodeWithInImage(qr_path, im_path);
+			System::Boolean^ isChecked = checkBox1->Checked;
+			int code= image_hepler.encodeQRCodeWithInImage(qr_path, im_path,(bool)isChecked);
 
 			if (code == 0) {
 				imageViwer.showImage(qr_path);
@@ -287,9 +287,9 @@ namespace ImageHelperComponent {
 				return;
 			}
 
-			System::Boolean^ isChecked = checkBox1->Checked;
+			//System::Boolean^ isChecked = checkBox1->Checked;
 			std::string cam_image = msclr::interop::marshal_as<std::string>(cam_imagr_path);
-			std::string code = image_hepler.decodeQRCodeFromImage(cam_image ,(bool)isChecked);
+			std::string code = image_hepler.decodeQRCodeFromImage(cam_image);
 
 			String^ msg = gcnew String(code.c_str());
 			MessageBox::Show("Decode Stego image is completed :" + msg, "Decode Stego Image", MessageBoxButtons::OK);
