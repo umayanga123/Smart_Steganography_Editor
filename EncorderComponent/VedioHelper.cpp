@@ -44,9 +44,9 @@ public:
 				cap >> frame; // get the next frame from video
 
 				
-				if (frameNum %5 == 0) {
+				if (frameNum %5== 0) {
 					//Algorithem
-					frame = encodeQRCodeWithInImage(qr_img, frame , isHardEncode);
+				frame = encodeQRCodeWithInImage(qr_img, frame , isHardEncode);
 				}
 
 				//If the VideoWriter object is not initialized successfully, exit the program
@@ -159,6 +159,7 @@ public:
 	std::string decodeQCodeFromVedio(std::string v_path , int frame_range ) {
 
 		cv::VideoCapture cap(v_path);
+		
 
 		// Check if camera opened successfully
 		if (!cap.isOpened()) {
@@ -190,7 +191,11 @@ public:
 				break;
 			}
 
-			decodeQRCodeFromImage(frame,i);
+			std::string data= decodeQRCodeFromImage(frame,i);
+			if (data.length() > 0)
+			{
+				return data;
+			}
 
 			i++;
 
@@ -200,13 +205,13 @@ public:
 				break;
 		}
 
-		return "End Operation";
+		return "Data Not Found";
 	}
 
 
 	/*Decode QR code from image and print data*/
 public:
-	void decodeQRCodeFromImage(cv::Mat frame,int i) {
+	std::string decodeQRCodeFromImage(cv::Mat frame,int i) {
 
 		// Stores original image
 		cv::Mat stgo_image = frame;		
@@ -221,32 +226,28 @@ public:
 		cv::namedWindow("ONE Chanel Image", CV_WINDOW_AUTOSIZE);
 		imshow("ONE Chanel Image", one_ch_image);
 
-		//convert to BW
+		//convert to binary
 		cv::Mat img_bw;
-		/*if (isChecked == true) {
-			one_ch_image.copyTo(img_bw);
-			for (int y = 0; y < one_ch_image.cols; y++) {
-				for (int x = 0; x < one_ch_image.rows; x++) {
-					int value = (int)one_ch_image.at<uchar>(x, y);
-					if (value != 0) {
-						img_bw.at<uchar>(x, y) = 255;
-					}
-					else {
-						img_bw.at<uchar>(x, y) = 0;
-					}
-				}
-			}
-		}
-		else {*/
-			img_bw = one_ch_image > 128;
-		//}
+		
+		img_bw = one_ch_image > 0;
 
+		
 
 		cv::namedWindow("B_W Image", CV_WINDOW_AUTOSIZE);
 		imshow("B_W Image", img_bw);
 
-		std::string filePath = "F://vo_frames/" + std::to_string(static_cast<long long>(i)) + ".png";
-		cv::imwrite(filePath, img_bw);
+		//std::string filePath = "F://vo_frames/" + std::to_string(static_cast<long long>(i)) + ".png";
+		//cv::imwrite(filePath, img_bw);
+
+		cv::QRCodeDetector qrDecoder = cv::QRCodeDetector::QRCodeDetector();
+		std::string data = qrDecoder.detectAndDecode(img_bw);
+		if (data.length() > 0)
+		{
+			return data;
+		}
+		else {
+			return "";
+		}
 	}
 	
 /* This functions opens a video fileand extracts the framesand put them into a vector of Mat(its the class for representing an img) */
@@ -310,4 +311,44 @@ public:
 		return "FPS:" + frames_per_second + "F Count:" + frame_count;
 	}
 
+/*Play vedio*/
+public:
+	int playVedio(std::string v_path) {
+
+		//open the video file
+		cv::VideoCapture cap(v_path);
+
+		// Check if camera opened successfully
+		if (!cap.isOpened()) {
+			return -1;
+		}
+	
+		while (1) {
+
+			cv::Mat frame;
+
+			// Capture frame-by-frame
+			cap >> frame;
+			
+
+			// If the frame is empty, break immediately
+			if (frame.empty()) {
+				cap.release();
+				break;
+			}
+
+			cv::namedWindow("Vedio", CV_WINDOW_AUTOSIZE);
+			imshow("Vedio", frame);
+
+		
+			// Press  ESC on keyboard to exit
+			if (cv::waitKey(10) == 27)
+			{
+				break;
+			}
+		}
+
+		return 1;
+
+	}
 };

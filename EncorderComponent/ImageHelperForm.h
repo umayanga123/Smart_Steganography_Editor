@@ -51,6 +51,7 @@ namespace ImageHelperComponent {
 	private: System::Windows::Forms::Button^ button7;
 	private: System::Windows::Forms::Button^ button8;
 	private: System::Windows::Forms::CheckBox^ checkBox1;
+	private: System::Windows::Forms::Button^ button9;
 
 	private:
 
@@ -74,11 +75,12 @@ namespace ImageHelperComponent {
 			this->button7 = (gcnew System::Windows::Forms::Button());
 			this->button8 = (gcnew System::Windows::Forms::Button());
 			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
+			this->button9 = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(281, 239);
+			this->button1->Location = System::Drawing::Point(281, 250);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(75, 23);
 			this->button1->TabIndex = 0;
@@ -171,7 +173,7 @@ namespace ImageHelperComponent {
 			// 
 			// button8
 			// 
-			this->button8->Location = System::Drawing::Point(281, 191);
+			this->button8->Location = System::Drawing::Point(281, 221);
 			this->button8->Name = L"button8";
 			this->button8->Size = System::Drawing::Size(75, 23);
 			this->button8->TabIndex = 10;
@@ -189,11 +191,22 @@ namespace ImageHelperComponent {
 			this->checkBox1->Text = L"Hard Encode";
 			this->checkBox1->UseVisualStyleBackColor = true;
 			// 
+			// button9
+			// 
+			this->button9->Location = System::Drawing::Point(64, 188);
+			this->button9->Name = L"button9";
+			this->button9->Size = System::Drawing::Size(166, 23);
+			this->button9->TabIndex = 12;
+			this->button9->Text = L"color Hist";
+			this->button9->UseVisualStyleBackColor = true;
+			this->button9->Click += gcnew System::EventHandler(this, &ImageHelperForm::Button9_Click);
+			// 
 			// ImageHelperForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(375, 285);
+			this->Controls->Add(this->button9);
 			this->Controls->Add(this->checkBox1);
 			this->Controls->Add(this->button8);
 			this->Controls->Add(this->button7);
@@ -373,7 +386,33 @@ namespace ImageHelperComponent {
 				MessageBox::Show("error code :" + code);
 			}
 		} 
-	};
+	private: System::Void Button9_Click(System::Object^ sender, System::EventArgs^ e) {
+		ImageHelper image_hepler;
+		System::String^ rbg_path;
+		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+			if (openFileDialog1->OpenFile() != nullptr) {
+				rbg_path = openFileDialog1->InitialDirectory + openFileDialog1->FileName;
+			}
+		}
+		if (rbg_path == nullptr) {
+			return;
+		}
+
+		std::string image_color = msclr::interop::marshal_as<std::string>(rbg_path);
+		int code = image_hepler.getHistograme(image_color);
+
+		if (code == 0) {
+			MessageBox::Show("Operation Complete", "Show histograme", MessageBoxButtons::OK);
+		}
+		else {
+			MessageBox::Show("error code :" + code);
+		}
+
+
+
+
+	}
+};
 
 }
 

@@ -49,6 +49,7 @@ namespace VedioHelperComponent {
 	private: System::Windows::Forms::Button^ button7;
 	private: System::Windows::Forms::NumericUpDown^ numericUpDown1;
 	private: System::Windows::Forms::CheckBox^ checkBox1;
+	private: System::Windows::Forms::Button^ button8;
 	public:
 
 	private:
@@ -74,6 +75,7 @@ namespace VedioHelperComponent {
 			this->button7 = (gcnew System::Windows::Forms::Button());
 			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
+			this->button8 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -187,11 +189,22 @@ namespace VedioHelperComponent {
 			this->checkBox1->Text = L"Hard Encode";
 			this->checkBox1->UseVisualStyleBackColor = true;
 			// 
+			// button8
+			// 
+			this->button8->Location = System::Drawing::Point(251, 139);
+			this->button8->Name = L"button8";
+			this->button8->Size = System::Drawing::Size(118, 23);
+			this->button8->TabIndex = 15;
+			this->button8->Text = L"play vedio";
+			this->button8->UseVisualStyleBackColor = true;
+			this->button8->Click += gcnew System::EventHandler(this, &VedioHelperForm::Button8_Click);
+			// 
 			// VedioHelperForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(391, 261);
+			this->Controls->Add(this->button8);
 			this->Controls->Add(this->checkBox1);
 			this->Controls->Add(this->numericUpDown1);
 			this->Controls->Add(this->button7);
@@ -281,7 +294,7 @@ namespace VedioHelperComponent {
 			
 			std::string msg = vedio_hepler.decodeQCodeFromVedio(output_path, (int)framNumber);
 			String^ str2 = gcnew String(msg.c_str());
-			MessageBox::Show("Operation Complete" + str2, "title", MessageBoxButtons::OK);
+			MessageBox::Show("End Process", "title", MessageBoxButtons::OK);
 		}
 
 		/*Split vedio stream to frames set and save*/
@@ -336,7 +349,22 @@ namespace VedioHelperComponent {
 				MessageBox::Show("Informations :" + msg);
 			}
 		}
-	};
+	private: System::Void Button8_Click(System::Object^ sender, System::EventArgs^ e) {
+		VedioHelper vedio_hepler;
+		System::String^ i_path;
+
+		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+			if (openFileDialog1->OpenFile() != nullptr) {
+				i_path = openFileDialog1->InitialDirectory + openFileDialog1->FileName;
+			}
+		}
+		if (i_path == nullptr) {
+			return;
+		}
+		std::string e_path = msclr::interop::marshal_as<std::string>(i_path);
+		vedio_hepler.playVedio(e_path);
+	}
+};
 }
 
 #endif
