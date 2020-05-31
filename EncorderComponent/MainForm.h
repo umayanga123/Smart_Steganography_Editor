@@ -127,10 +127,11 @@ namespace MainComponent {
 		
 			
 			//pictureBox1->Image = bmp;
-		    //pictureBox1->SizeMode = PictureBoxSizeMode::CenterImage;
-		    // Bitmap^ bmp = gcnew Bitmap("ic_launcher.bmp");
+		    pictureBox1->SizeMode = PictureBoxSizeMode::CenterImage;
+		    Bitmap^ bmp = gcnew Bitmap("ic_launcher.bmp");
 			//resources->GetObject("ic_launcher");
-			//this->pictureBox1->Image = gcnew Bitmap("ic_launcher.bmp");
+			this->pictureBox1->Image = gcnew Bitmap("ic_launcher.bmp");
+
 			this->pictureBox1->Location = System::Drawing::Point(126, 67);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(142, 139);

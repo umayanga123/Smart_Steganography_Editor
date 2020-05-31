@@ -46,7 +46,7 @@ public:
 				
 				if (frameNum %5== 0) {
 					//Algorithem
-				frame = encodeQRCodeWithInImage(qr_img, frame , isHardEncode);
+				    frame = encodeQRCodeWithInImage(qr_img, frame , isHardEncode);
 				}
 
 				//If the VideoWriter object is not initialized successfully, exit the program
@@ -236,8 +236,8 @@ public:
 		cv::namedWindow("B_W Image", CV_WINDOW_AUTOSIZE);
 		imshow("B_W Image", img_bw);
 
-		//std::string filePath = "F://vo_frames/" + std::to_string(static_cast<long long>(i)) + ".png";
-		//cv::imwrite(filePath, img_bw);
+		std::string filePath = "F://vo_frames/" + std::to_string(static_cast<long long>(i)) + ".png";
+		cv::imwrite(filePath, img_bw);
 
 		cv::QRCodeDetector qrDecoder = cv::QRCodeDetector::QRCodeDetector();
 		std::string data = qrDecoder.detectAndDecode(img_bw);
