@@ -266,7 +266,7 @@ namespace ImageHelperComponent {
 	private: 
 		System::Void encode_Btn_Click(System::Object^ sender, System::EventArgs^ e) {
 			ImageHelper image_hepler;
-			ImageViwer imageViwer , imageViwer1,imageViwer2;
+			ImageViwer imageViwer , imageViwer1;
 			System::String^ q_path = qr_path;
 			std::string qr_path = msclr::interop::marshal_as<std::string>(q_path);
 		
@@ -276,8 +276,8 @@ namespace ImageHelperComponent {
 			int code= image_hepler.encodeQRCodeWithInImage(qr_path, im_path,(bool)isChecked);
 
 			if (code == 0) {
-				imageViwer.showImage(qr_path);
-				imageViwer1.showImage(im_path);
+				//imageViwer.showImage(qr_path);
+				//imageViwer1.showImage(im_path);
 				MessageBox::Show("Image Encode Complete", "Encode Complete", MessageBoxButtons::OK);
 			}
 			else {

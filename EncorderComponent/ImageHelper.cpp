@@ -240,8 +240,8 @@ public:
 			std::cout << "this is not a single channel image" << std::endl;
 		}
 
-		cv::namedWindow("Stego_Image", CV_WINDOW_AUTOSIZE);
-		imshow("Stego_Image", cv_img);
+		//cv::namedWindow("Stego_Image", CV_WINDOW_AUTOSIZE);
+		//imshow("Stego_Image", cv_img);
 		imwrite("output/en/stego_image_pic_" + img_path.substr(img_path.find_last_of("/\\") + 1), cv_img);
 		return 0;
 	}
